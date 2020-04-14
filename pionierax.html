@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="pl-PL">
 	<head>
+    <meta charset="utf-8" >
 		<title>
 			Pionierax
 		</title>
@@ -36,6 +37,17 @@
     <p id="X" style="position: fixed; top: -20px; background-color: White">metry w osi X: 10</p>
     <p id="Y" style="position: fixed; top: 0px; background-color: White">metry w osi Y: 10</p>
     <p id="Z" style="position: fixed; top: 20px; background-color: White">metry w osi Z: 10</p>
+    <p id="obrotPlaski" style="position:absolute; top:1010px; left:846px; background-color: #7777ff">123</p>
+    <p id="obrotPionowy" style="position:absolute; top:1010px; left:896px; background-color: #7777ff">123</p>
+    <input type="file" id="plik" style="position:fixed; top:0px; left:500px"
+    onchange="
+    var odczyt = new FileReader();
+    var lipon;
+    odczyt.onload = function(plik2){
+      wartoscOdczytana = plik2.target.result;
+      window.zlitujcieSieZTymiNazwami = true;
+    };
+    odczyt.readAsText(event.target.files[0], 'UTF-8');"  >
 		<script>
 		//deklaracje zmiennych zaznaczenia, punktów i linii
 		//deklaracje kontekstów
@@ -49,9 +61,11 @@
 		//ruszanie pkt
 		//tworzenie linii
 		//renderowanie
+    zlitujcieSieZTymiNazwami = false;
     Math.radians = function(degrees) {
     return degrees * Math.PI / 180;
     };
+
 
 
     var obrotPionowy = 90;
@@ -94,8 +108,75 @@
 		var PunktyTab = [];
 		var zaznaczono = false;
     mierz = function(numer){
-      if(LinieTab[numer].pkt1 != undefined&&LinieTab[numer].pkt2 != undefined)
-      return Math.round(100*Math.sqrt(Math.pow(PunktyTab[LinieTab[numer].pkt1].x - PunktyTab[LinieTab[numer].pkt2].x, 2)+Math.pow(PunktyTab[LinieTab[numer].pkt1].y - PunktyTab[LinieTab[numer].pkt2].y, 2)+Math.pow(PunktyTab[LinieTab[numer].pkt1].z - PunktyTab[LinieTab[numer].pkt2].z, 2)))/100;
+      if(PunktyTab[LinieTab[numer].pkt1] != undefined&&PunktyTab[LinieTab[numer].pkt2] != undefined){
+        if(PunktyTab[LinieTab[numer].pkt1].x!=undefined&&PunktyTab[LinieTab[numer].pkt2].x!=undefined){
+          return Math.round(100*Math.sqrt(Math.pow(PunktyTab[LinieTab[numer].pkt1].x - PunktyTab[LinieTab[numer].pkt2].x, 2)+Math.pow(PunktyTab[LinieTab[numer].pkt1].y - PunktyTab[LinieTab[numer].pkt2].y, 2)+Math.pow(PunktyTab[LinieTab[numer].pkt1].z - PunktyTab[LinieTab[numer].pkt2].z, 2)))/100;
+
+        }
+      }
+    }
+    var odczytano = function(tekst){
+      var bufor = "";
+      var punkt =-1;
+      var linia =-1;
+      var pozycja = 0;
+
+      PunktyTab=[];
+      LinieTab=[];
+
+      while(pozycja<tekst.length){
+
+        if(tekst.charAt(pozycja)==="x"){
+          PunktyTab[punkt].x = parseFloat(bufor);
+          pozycja++;
+          bufor="";
+          continue;
+        }
+        if(tekst.charAt(pozycja)==="y"){
+          PunktyTab[punkt].y = parseFloat(bufor);
+          pozycja++;
+          bufor="";
+          continue;
+        }
+        if(tekst.charAt(pozycja)==="z"){
+          PunktyTab[punkt].z = parseFloat(bufor);
+          pozycja++;
+          bufor="";
+          continue;
+        }
+
+
+        if(tekst.charAt(pozycja)==="b"){
+          punkt++;
+          PunktyTab.push(new Punkt(undefined, undefined, undefined));
+
+          pozycja++;
+          continue;
+        }
+
+        if(tekst.charAt(pozycja)==="l"){
+          linia++;
+          LinieTab.push(new Linia(undefined,undefined));
+          pozycja++
+          continue;
+        }
+        if(tekst.charAt(pozycja)==="c"){
+          LinieTab[linia].pkt1 = parseInt(bufor);
+          pozycja++;
+          bufor="";
+          continue;
+        }
+        if(tekst.charAt(pozycja)==="d"){
+          LinieTab[linia].pkt2 = parseInt(bufor);
+          pozycja++;
+          bufor="";
+          continue;
+        }
+        bufor+=tekst.charAt(pozycja);
+        pozycja++
+      }
+      zlitujcieSieZTymiNazwami = false;
+
     }
 	///////////////////////////////////////
 		var rysowandoXY = document.getElementById("poleXY").getContext("2d");
@@ -122,39 +203,52 @@
    var aktualizujDlugosci = function(grfrfsr){
      $("#suma").text("Żerdzie:");
      for(var i = 0; i<LinieTab.length; i++){
-       console.log("33");
+
        zaliczono = false;
        for(var ii = 0; ii<dlugosciTab.length; ii++){
-         console.log("11");
+
          if(mierz(i)===dlugosciTab[ii].dlug && !zaliczono){
-           console.log("22");
+
            dlugosciTab[ii].liczba++;
            zaliczono = true;
          }
        }
        if(!zaliczono){
          dlugosciTab.push(new dlugosc(mierz(i), 1));
-         console.log("44");
+
        }
      }
      for(var i = 0; i<dlugosciTab.length; i++){
-       console.log("55");
+
        if(!isNaN(dlugosciTab[i].dlug))
        $("#suma").append("<br/>"+dlugosciTab[i].liczba + "x "+dlugosciTab[i].dlug+"dm");
      }
      dlugosciTab=[];
 		 //==============================
 		 for(var i =0; i<PunktyTab.length; i++){
-			 projekt+=( i +"a"+ PunktyTab[i].x+"a"+ PunktyTab[i].y+"a"+ PunktyTab[i].z+"b");
+       if(PunktyTab[i].x!=undefined){
+         projekt+=("b"+ PunktyTab[i].x+"x"+ PunktyTab[i].y+"y"+ PunktyTab[i].z+"z");
+       }
+       if(PunktyTab[i].x===undefined){
+         projekt+="b";
+       }
 		 }
-		 projekt+="L";
+
 		 for(var i =0; i<LinieTab.length; i++){
-			 projekt+=( i +"a"+ LinieTab[i].x+"a"+ LinieTab[i].y+"a"+ LinieTab[i].z+"b");
+       if(LinieTab[i].pkt1!=undefined){
+			   projekt+=("l"+ LinieTab[i].pkt1+"c"+ LinieTab[i].pkt2+"d");
+       }
+       if(LinieTab[i].pkt1===undefined){
+			   projekt+=("l");
+       }
 		 }
-		 var plik = new Blob([projekt],{type: 'text/plain'});
+		 var plik = new Blob([projekt],{type: 'text/plain;charset=utf-8'});
 		 document.getElementById("pobierz").setAttribute('href',window.URL.createObjectURL(plik));
-		 document.getElementById("pobierz").setAttribute('download',"zapisPionierki.pionier");
+		 document.getElementById("pobierz").setAttribute('download',"projektPionierki.pioneer");
 		 projekt = "";
+     if(zlitujcieSieZTymiNazwami){
+       odczytano(wartoscOdczytana);
+     }
    }
    setInterval(aktualizujDlugosci, 500);
    var rzutuj= function(numer){
@@ -344,7 +438,6 @@
 					pasekJest = true;
 				}
 				if(zaznaczonePunkty.length===1&&pkt1===undefined&&trybLinie){
-					console.log("wtf");
 					pkt1 = zaznaczonePunkty[0];
 					zaznaczonePunkty = [];
 					return;
@@ -400,7 +493,6 @@
 				pasekJest = true;
 			}
 			if(zaznaczonePunkty.length===1&&pkt1===undefined&&trybLinie){
-				console.log("wtf");
 				pkt1 = zaznaczonePunkty[0];
 				zaznaczonePunkty = [];
 				return;
@@ -439,7 +531,6 @@
 				for(var i = 0; i<zaznaczonePunkty.length; i++){
 					if(Math.round((klik.offsetX-20)/40) ===i){
 						if(pkt1===undefined&&trybLinie){
-							console.log("wtf");
 							pkt1 = zaznaczonePunkty[i];
 							zaznaczonePunkty = [];
 							pasekJest = false;
@@ -514,6 +605,7 @@
 		//*******************************************************************
 		//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 		//*******************************************************************
+
 		var render = function(){
       if(wcislo==="lewo"){
         obrotPlaski -= 1;
@@ -561,13 +653,17 @@
 			rysowandoXY.fillStyle = "#77ff77";
 			rysowandoXY.fillRect(800, 0, 20, 800);
       for(var i = 0; i<LinieTab.length;i++){
-        if(LinieTab[i].pkt1 != undefined&&PunktyTab[LinieTab[i].pkt1].x!=undefined&&PunktyTab[LinieTab[i].pkt2].x!=undefined){
+        if(PunktyTab[LinieTab[i].pkt1]!=undefined&&PunktyTab[LinieTab[i].pkt2]!=undefined&&LinieTab[i].pkt1 != undefined&&PunktyTab[LinieTab[i].pkt1].x!=undefined&&PunktyTab[LinieTab[i].pkt2].x!=undefined){
           rysowandoXY.moveTo(PunktyTab[LinieTab[i].pkt1].x*80/Xwartosc,PunktyTab[LinieTab[i].pkt1].y*80/Ywartosc);
           rysowandoXY.lineTo(PunktyTab[LinieTab[i].pkt2].x*80/Xwartosc,PunktyTab[LinieTab[i].pkt2].y*80/Ywartosc);
           rysowandoXY.moveTo(820+(PunktyTab[LinieTab[i].pkt1].z*80/Xwartosc),PunktyTab[LinieTab[i].pkt1].y*80/Ywartosc);
           rysowandoXY.lineTo(820+(PunktyTab[LinieTab[i].pkt2].z*80/Xwartosc),PunktyTab[LinieTab[i].pkt2].y*80/Ywartosc);
           rysowandoZX.moveTo(PunktyTab[LinieTab[i].pkt1].x*80/Xwartosc,PunktyTab[LinieTab[i].pkt1].z*80/Ywartosc);
           rysowandoZX.lineTo(PunktyTab[LinieTab[i].pkt2].x*80/Xwartosc,PunktyTab[LinieTab[i].pkt2].z*80/Ywartosc);
+        }
+        if(PunktyTab[LinieTab[i].pkt1]===undefined||PunktyTab[LinieTab[i].pkt2]===undefined){
+          LinieTab[i].pkt1=undefined;
+          LinieTab[i].pkt2=undefined;
         }
       }
       rysowandoXY.stroke();
@@ -611,13 +707,41 @@
 						rysowandoXY.fillRect((PunktyTab[i].z*80/Zwartosc)+815,(PunktyTab[i].y*80/Ywartosc)-5,9,9);
 					}
         }
+        pole3d.beginPath();
         pole3d.fillStyle="#7777ff";
         pole3d.fillRect(0,0,800,800);
         pole3d.fillStyle="Black";
+        pole3d.strokeStyle="Brown";
+
         for(var i=0; i<PunktyTab.length;i++){
+          if(PunktyTab[i]!=undefined)
           pole3d.fillRect(398+rzutuj(i).X,398+rzutuj(i).Y,4,4);
         }
 
+        for(var i=0; i<LinieTab.length;i++){
+          if(LinieTab[i].pkt1!=undefined&&PunktyTab[LinieTab[i].pkt1]!=undefined&&PunktyTab[LinieTab[i].pkt2]!=undefined){
+            pole3d.moveTo(400+rzutuj(LinieTab[i].pkt1).X,400+rzutuj(LinieTab[i].pkt1).Y);
+            pole3d.lineTo(400+rzutuj(LinieTab[i].pkt2).X,400+rzutuj(LinieTab[i].pkt2).Y);
+          }
+        }
+        pole3d.stroke();
+        pole3d.beginPath();
+        pole3d.strokeStyle="Yellow";
+        pole3d.lineWidth=2;
+        pole3d.arc(30,30,20,2*Math.radians(obrotPlaski+10),2*Math.radians(obrotPlaski+350));
+        pole3d.stroke();
+        pole3d.beginPath();
+        pole3d.arc(80,30,20,Math.radians(90),Math.radians(270));
+        pole3d.stroke();
+        pole3d.beginPath();
+        pole3d.strokeStyle="Red";
+        pole3d.arc(30,30,20,2*Math.radians(obrotPlaski+350),2*Math.radians(obrotPlaski+10));
+        pole3d.stroke();
+        pole3d.beginPath();
+        pole3d.arc(80,30,20,Math.radians(obrotPionowy+440),Math.radians(obrotPionowy+100));
+        pole3d.stroke();
+        $("#obrotPlaski").text(obrotPlaski);
+        $("#obrotPionowy").text(obrotPionowy);
 			}
 		setInterval(render,10);
 		</script>
