@@ -50,6 +50,20 @@
     alert('Witaj w programie pionierax. Oto jego instrukcja obsługi: Cała edycja polega na pracy w trzech trybach: przesuwania punktów, usuwania punktów i edycji linii(naraz usuwania i dodawania). Ustawia się je kolejno klawiszami R U L. W pierwszym trybie kliknięcie na punkt powoduje jego podniesienie, kolejne upuszczenie. W drugim kliknięcie na punkt powoduje usunięcie. W trzecim kliknięcie na punkt powoduje zaczepienie na nim nowej linii, a kliknięcie na inny zakotwiczenie także w nim. Jeśli tą operacje wykona się na punktach pomędzy którymi jest już żerdź, nie zostanie stworzona nowa, lecz stara zostanie usunięta. Jeśli jakiekolwiek kliknięcie mające na celu wybrać punkt (każde za wyjątkiem upuszczającego) natrafi na dwa nachodzące na siebie punkty, u góry po lewej pojawia się pasek, na którym można wybrać o który punkt chodzi (każdy punkt ma swój numer, który w takiej sytuacji zostanie wyświetlony na wszystkich płaszczyznach i dzięki temu możemy wybrać).  Punkty 3d dodać możesz wciskając P. Na czwartym polu znajduje się widok w 3d (nieperspektywiczny bo równoległy, to znaczy każdy obiekt widać pod tym samym kątem). Sterować kątem rzutowania można za pomocą kalwiszy WSAD. W prawym górnym rogu znajdują się 3 pola, w których możemy ustawić skalę przestrzeni 3d (X-skala lewo prawo, Y-skala góra dół, Z-skala tył przód) w jakiej chcemy pracować. Domyślnie są one spzężone, to znaczy zmiana wartości jednej z nich powoduje zmianę na taką samą wartość reszty. Jeśli nie chcemy sprzężenia, klikamy na pole tekstowe położone na prawo od wyżej wymienionych trzech z napisem SPRZĘŻENIE. Każdy projekt możemy zapisać w postaci pliku PIONEER. Aby to zrobić klkamy na przycisk POBIERZ na górze ekranu, nieco po lewej. Możemy także wczytać plik już zapisany, klikając na szare pole z napisem PRZEGLĄDAJ. Wybierzemy wtedy projekt z pamięci komputera. Po lewej na górze znajduje się spis utworzonych żerdzi wraz z ich długościami i ilością (żeby otworzyć trzeba kliknąć, żeby zamknąć - znowu kliknąć). Jak widzisz, główne pole składa się z czterech kwadratów. Mogą one być ułożone na dwa sposoby: plastyczny i pełnowymiarowy. W tym pierwszym masz do dyspozycji 4 okienka równej wielkości, znajdujące się cały czas na ekranie. Możesz przez nie oglądać dowolne miejsce każdego z pól, ustawiając to za pomocą skroli. W drugim trybie z kolei wszystkie okna zajmują dokładnie tyle miejsca ile potrzebują, i możesz widzieć je całe (naturalnie nie naraz). Jeśli chcesz przybliżyc lub oddalić obraz, użyj przeglądarkowego przybliżenia.');
     "/>
 		<script>
+    var zapis = [];
+    var Akcja = function(typ, numer, pozycja, punktyDwa){
+      //typy:
+      //0 stworzenie punktu
+      //1 przesunięcie punktu
+      //2 usunięcie punktu
+      //3 stworzenie linii
+      //4 usunięcie linii
+      this.punktyDwa = punktyDwa //|| {pkt1: undefined, pkt2: undefined}
+      ;
+      this.pozycja = pozycja || {x: undefined, y: undefined, z: undefined};
+      this.typ = typ;
+      this.numer = numer;
+    }
     rozwoj = false;
     var pozycjaMyszyX;
     var pozycjaMyszyY;
@@ -435,6 +449,7 @@
 			  szift=true;
 		  }
 		  if(klik.keyCode===80){
+        zapis.push(new Akcja(0, PunktyTab.length));
 		    PunktyTab.push(new Punkt(pozycjaMyszyX, pozycjaMyszyY, pozycjaMyszyZ));
 		  }
       if(klik.keyCode === 76){
@@ -487,6 +502,8 @@
 				if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
 					for(var i = 0; i<LinieTab.length; i++){
 						if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
+              zapis.push(new Akcja(4, i,undefined, LinieTab[i]));
+              console.log("!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1");
 							LinieTab[i].pkt1 = undefined;
 							LinieTab[i].pkt2 = undefined;
 							pkt1 = undefined;
@@ -494,17 +511,20 @@
 							return;
 						}
 					}
+          zapis.push(new Akcja(3, LinieTab.length));
 					LinieTab.push(new Linia(pkt1, zaznaczonePunkty[0]));
 					pkt1 = undefined;
 					zaznaczonePunkty=[];
 					return;
 				}
 				if(zaznaczonePunkty.length===1&&trybPrzesuwanie){
+          zapis.push(new Akcja(1, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
 					aktualnyPunkt = zaznaczonePunkty[0];
 					zaznaczono = true;
 					zaznaczonePunkty = [];
 				}
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
+          zapis.push(new Akcja(2, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -536,6 +556,8 @@
         if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
           for(var i = 0; i<LinieTab.length; i++){
             if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
+              console.log("!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1");
+              zapis.push(new Akcja(4, i, undefined, LinieTab[i]));
               LinieTab[i].pkt1 = undefined;
               LinieTab[i].pkt2 = undefined;
               pkt1 = undefined;
@@ -543,17 +565,20 @@
               return;
             }
           }
+          zapis.push(new Akcja(3, LinieTab.length));
           LinieTab.push(new Linia(pkt1, zaznaczonePunkty[0]));
           pkt1 = undefined;
           zaznaczonePunkty=[];
           return;
         }
         if(zaznaczonePunkty.length===1&&trybPrzesuwanie){
+          zapis.push(new Akcja(1, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
           aktualnyPunkt = zaznaczonePunkty[0];
           zaznaczono = true;
           zaznaczonePunkty = [];
         }
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
+          zapis.push(new Akcja(2, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -585,6 +610,8 @@
         if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
           for(var i = 0; i<LinieTab.length; i++){
             if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
+              console.log("!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1");
+              zapis.push(new Akcja(4, i, undefined, LinieTab[i]));
               LinieTab[i].pkt1 = undefined;
               LinieTab[i].pkt2 = undefined;
               pkt1 = undefined;
@@ -592,17 +619,20 @@
               return;
             }
           }
+          zapis.push(new Akcja(3, LinieTab.length));
           LinieTab.push(new Linia(pkt1, zaznaczonePunkty[0]));
           pkt1 = undefined;
           zaznaczonePunkty=[];
           return;
         }
         if(zaznaczonePunkty.length===1&&trybPrzesuwanie){
+          zapis.push(new Akcja(1, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
           aktualnyPunkt = zaznaczonePunkty[0];
           zaznaczono = true;
           zaznaczonePunkty = [];
         }
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
+          zapis.push(new Akcja(2, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -627,6 +657,7 @@
 						if(pkt1!=undefined&&trybLinie){
 							for(var ii = 0; ii<LinieTab.length; ii++){
 								if((LinieTab[ii].pkt1 === pkt1 &&LinieTab[ii].pkt2 === zaznaczonePunkty[i]) || (LinieTab[ii].pkt2 === pkt1 &&LinieTab[ii].pkt1 === zaznaczonePunkty[i])){
+                  zapis.push(new Akcja(4, ii, undefined, LinieTab[ii]));
 									LinieTab[ii].pkt1 = undefined;
 									LinieTab[ii].pkt2 = undefined;
 									pkt1 = undefined;
@@ -636,14 +667,17 @@
 									return;
 								}
 							}
+              zapis.push(new Akcja(3, LinieTab.length));
 							LinieTab.push(new Linia(pkt1, zaznaczonePunkty[i]));
 							pkt1 = undefined;
 						}
 						if(trybPrzesuwanie){
+              zapis.push(new Akcja(1, zaznaczonePunkty[i], PunktyTab[zaznaczonePunkty[i]]));
 							aktualnyPunkt = zaznaczonePunkty[i];
 							zaznaczono = true;
 						}
 						if(trybUsuwanie){
+              zapis.push(new Akcja(2, zaznaczonePunkty[i], PunktyTab[zaznaczonePunkty[i]]));
 							PunktyTab[zaznaczonePunkty[i]].x = undefined;
 							PunktyTab[zaznaczonePunkty[i]].y = undefined;
 							PunktyTab[zaznaczonePunkty[i]].z = undefined;
