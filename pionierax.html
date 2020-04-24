@@ -51,23 +51,22 @@
     "/>
 		<script>
     var zapis = [];
-    var Akcja = function(typ, numer, pozycja, punktyDwa){
+    var Akcja = function(typ, numer, obiekt){
       //typy:
       //0 stworzenie punktu
       //1 przesunięcie punktu
       //2 usunięcie punktu
       //3 stworzenie linii
       //4 usunięcie linii
-      this.punktyDwa = punktyDwa //|| {pkt1: undefined, pkt2: undefined}
-      ;
-      this.pozycja = pozycja || {x: undefined, y: undefined, z: undefined};
+      this.obiekt = obiekt;
+
       this.typ = typ;
       this.numer = numer;
     }
     rozwoj = false;
-    var pozycjaMyszyX;
-    var pozycjaMyszyY;
-    var pozycjaMyszyZ;
+    var pozycjaMyszyX = 10;
+    var pozycjaMyszyY = 10;
+    var pozycjaMyszyZ = 10;
     var poleKlikniecia;
 
     zlitujcieSieZTymiNazwami = false;
@@ -449,8 +448,8 @@
 			  szift=true;
 		  }
 		  if(klik.keyCode===80){
-        zapis.push(new Akcja(0, PunktyTab.length));
 		    PunktyTab.push(new Punkt(pozycjaMyszyX, pozycjaMyszyY, pozycjaMyszyZ));
+        zapis.push(new Akcja(0, PunktyTab.length-1, Object.assign({}, PunktyTab[PunktyTab.length-1])));
 		  }
       if(klik.keyCode === 76){
         trybLinie=true;
@@ -476,17 +475,51 @@
       if(klik.keyCode===83){
         wcislo="dol";
       }
+      if(klik.keyCode===90){
+        zaznaczonePunkty = [];
+        pasekJest = false;
+        $("#pasek").width = 0;
+        if(zapis[zapis.length-1].typ === 0){
+          PunktyTab.pop();
+          zapis.pop();
+          return;
+        }
+        if(zapis[zapis.length-1].typ === 1){
+          PunktyTab[zapis[zapis.length-1].numer]= Object.assign({}, zapis[zapis.length-1].obiekt);
+          zapis.pop();
+          return;
+        }
+        if(zapis[zapis.length-1].typ === 2){
+          PunktyTab[zapis[zapis.length-1].numer]= Object.assign({}, zapis[zapis.length-1].obiekt);
+          zapis.pop();
+          return;
+        }
+
+        if(zapis[zapis.length-1].typ === 3){
+          LinieTab.pop();
+          zapis.pop();
+          return;
+        }
+        if(zapis[zapis.length-1].typ === 4){
+          LinieTab[zapis[zapis.length-1].numer]= Object.assign({}, zapis[zapis.length-1].obiekt);
+          zapis.pop();
+          return;
+        }
+      }
     }
 		PunktyTab[0]=new Punkt(10, 10, 10);
 		var obslugaKlikuMyszyZX = function(klik){
       poleKlikniecia = 2;
+      zaznaczonePunkty = [];
+      pasekJest = false;
+      $("#pasek").width = 0;
 			if(zaznaczono){
 				zaznaczono = false;
 				return;
 			}
 			if(!zaznaczono&&!pasekJest){
 				for(var i = 0; i<PunktyTab.length; i++){
-					if((PunktyTab[i].x*80/Xwartosc)<(klik.offsetX+20)&&(PunktyTab[i].x*80/Xwartosc)>(klik.offsetX-20)&&(PunktyTab[i].z*80/Zwartosc)<(klik.offsetY+10)&&(PunktyTab[i].z*80/Zwartosc)>(klik.offsetY-10)){
+					if((PunktyTab[i].x*80/Xwartosc)<(klik.offsetX+10)&&(PunktyTab[i].x*80/Xwartosc)>(klik.offsetX-10)&&(PunktyTab[i].z*80/Zwartosc)<(klik.offsetY+10)&&(PunktyTab[i].z*80/Zwartosc)>(klik.offsetY-10)){
             zaznaczonePunkty.push(i);
 					}
 				}
@@ -502,8 +535,9 @@
 				if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
 					for(var i = 0; i<LinieTab.length; i++){
 						if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
-              zapis.push(new Akcja(4, i,undefined, LinieTab[i]));
-              console.log("!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1");
+              console.log(LinieTab[i].pkt1);
+              zapis.push(new Akcja(4, i,  Object.assign({}, LinieTab[i])));
+
 							LinieTab[i].pkt1 = undefined;
 							LinieTab[i].pkt2 = undefined;
 							pkt1 = undefined;
@@ -511,20 +545,23 @@
 							return;
 						}
 					}
-          zapis.push(new Akcja(3, LinieTab.length));
+
 					LinieTab.push(new Linia(pkt1, zaznaczonePunkty[0]));
+          zapis.push(new Akcja(3, LinieTab.length-1, Object.assign({}, LinieTab[LinieTab.length-1])));
 					pkt1 = undefined;
 					zaznaczonePunkty=[];
 					return;
 				}
 				if(zaznaczonePunkty.length===1&&trybPrzesuwanie){
-          zapis.push(new Akcja(1, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
+          zapis.push(new Akcja(1, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
+
 					aktualnyPunkt = zaznaczonePunkty[0];
 					zaznaczono = true;
 					zaznaczonePunkty = [];
 				}
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
-          zapis.push(new Akcja(2, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
+          zapis.push(new Akcja(2, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
+
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -533,6 +570,9 @@
 			}
 		}//
     var obslugaKlikuMyszyXY = function(klik){
+      zaznaczonePunkty = [];
+      pasekJest = false;
+      $("#pasek").width = 0;
       poleKlikniecia = 0;
       if(zaznaczono){
         zaznaczono = false;
@@ -556,8 +596,8 @@
         if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
           for(var i = 0; i<LinieTab.length; i++){
             if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
-              console.log("!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1");
-              zapis.push(new Akcja(4, i, undefined, LinieTab[i]));
+              console.log(LinieTab[i].pkt1);
+              zapis.push(new Akcja(4, i,  Object.assign({}, LinieTab[i])));
               LinieTab[i].pkt1 = undefined;
               LinieTab[i].pkt2 = undefined;
               pkt1 = undefined;
@@ -565,20 +605,21 @@
               return;
             }
           }
-          zapis.push(new Akcja(3, LinieTab.length));
           LinieTab.push(new Linia(pkt1, zaznaczonePunkty[0]));
+          zapis.push(new Akcja(3, LinieTab.length-1, Object.assign({}, LinieTab[LinieTab.length-1])));
           pkt1 = undefined;
           zaznaczonePunkty=[];
           return;
         }
         if(zaznaczonePunkty.length===1&&trybPrzesuwanie){
-          zapis.push(new Akcja(1, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
+          zapis.push(new Akcja(1, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
           aktualnyPunkt = zaznaczonePunkty[0];
           zaznaczono = true;
           zaznaczonePunkty = [];
         }
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
-          zapis.push(new Akcja(2, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
+          zapis.push(new Akcja(2, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
+
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -587,6 +628,9 @@
       }
     }//
     var obslugaKlikuMyszyYZ = function(klik){
+      zaznaczonePunkty = [];
+      pasekJest = false;
+      $("#pasek").width = 0;
       poleKlikniecia = 1;
       if(zaznaczono){
         zaznaczono = false;
@@ -610,8 +654,9 @@
         if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
           for(var i = 0; i<LinieTab.length; i++){
             if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
-              console.log("!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1");
-              zapis.push(new Akcja(4, i, undefined, LinieTab[i]));
+              console.log(LinieTab[i].pkt1);
+              zapis.push(new Akcja(4, i,  Object.assign({}, LinieTab[i])));
+
               LinieTab[i].pkt1 = undefined;
               LinieTab[i].pkt2 = undefined;
               pkt1 = undefined;
@@ -619,20 +664,23 @@
               return;
             }
           }
-          zapis.push(new Akcja(3, LinieTab.length));
           LinieTab.push(new Linia(pkt1, zaznaczonePunkty[0]));
+          zapis.push(new Akcja(3, LinieTab.length-1, Object.assign({}, LinieTab[LinieTab.length-1])));
+
           pkt1 = undefined;
           zaznaczonePunkty=[];
           return;
         }
         if(zaznaczonePunkty.length===1&&trybPrzesuwanie){
-          zapis.push(new Akcja(1, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
+          zapis.push(new Akcja(1, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
+
           aktualnyPunkt = zaznaczonePunkty[0];
           zaznaczono = true;
           zaznaczonePunkty = [];
         }
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
-          zapis.push(new Akcja(2, zaznaczonePunkty[0], PunktyTab[zaznaczonePunkty[0]]));
+          zapis.push(new Akcja(2, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
+
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -657,7 +705,9 @@
 						if(pkt1!=undefined&&trybLinie){
 							for(var ii = 0; ii<LinieTab.length; ii++){
 								if((LinieTab[ii].pkt1 === pkt1 &&LinieTab[ii].pkt2 === zaznaczonePunkty[i]) || (LinieTab[ii].pkt2 === pkt1 &&LinieTab[ii].pkt1 === zaznaczonePunkty[i])){
-                  zapis.push(new Akcja(4, ii, undefined, LinieTab[ii]));
+                  console.log(LinieTab[ii].pkt1);
+                  zapis.push(new Akcja(4, ii,  Object.assign({}, LinieTab[ii])));
+
 									LinieTab[ii].pkt1 = undefined;
 									LinieTab[ii].pkt2 = undefined;
 									pkt1 = undefined;
@@ -667,17 +717,20 @@
 									return;
 								}
 							}
-              zapis.push(new Akcja(3, LinieTab.length));
 							LinieTab.push(new Linia(pkt1, zaznaczonePunkty[i]));
+              zapis.push(new Akcja(3, LinieTab.length-1, Object.assign({}, LinieTab[LinieTab.length-1])));
+
 							pkt1 = undefined;
 						}
 						if(trybPrzesuwanie){
-              zapis.push(new Akcja(1, zaznaczonePunkty[i], PunktyTab[zaznaczonePunkty[i]]));
+              zapis.push(new Akcja(1, zaznaczonePunkty[i], Object.assign({}, PunktyTab[zaznaczonePunkty[i]])));
+
 							aktualnyPunkt = zaznaczonePunkty[i];
 							zaznaczono = true;
 						}
 						if(trybUsuwanie){
-              zapis.push(new Akcja(2, zaznaczonePunkty[i], PunktyTab[zaznaczonePunkty[i]]));
+              zapis.push(new Akcja(2, zaznaczonePunkty[i], Object.assign({}, PunktyTab[zaznaczonePunkty[i]])));
+
 							PunktyTab[zaznaczonePunkty[i]].x = undefined;
 							PunktyTab[zaznaczonePunkty[i]].y = undefined;
 							PunktyTab[zaznaczonePunkty[i]].z = undefined;
@@ -803,17 +856,17 @@
       for(var i = 0; i< zaznaczonePunkty.length; i++){
         if(pasekJest){
           rysowandoZX.fillStyle = "#008800";
-          rysowandoZX.font = "40px Calibri";
+          rysowandoZX.font = "25px Calibri";
           rysowandoZX.fillText(zaznaczonePunkty[i],PunktyTab[zaznaczonePunkty[i]].x*80/Xwartosc+5,PunktyTab[zaznaczonePunkty[i]].z*80/Zwartosc+10)
         }
         if(pasekJest){
           rysowandoYZ.fillStyle = "#008800";
-          rysowandoYZ.font = "40px Calibri";
+          rysowandoYZ.font = "25px Calibri";
           rysowandoYZ.fillText(zaznaczonePunkty[i],PunktyTab[zaznaczonePunkty[i]].z*80/Zwartosc+5,PunktyTab[zaznaczonePunkty[i]].y*80/Ywartosc+10)
         }
         if(pasekJest){
           rysowandoXY.fillStyle = "#008800";
-          rysowandoXY.font = "40px Calibri";
+          rysowandoXY.font = "25px Calibri";
           rysowandoXY.fillText(zaznaczonePunkty[i],PunktyTab[zaznaczonePunkty[i]].x*80/Xwartosc+5,PunktyTab[zaznaczonePunkty[i]].y*80/Ywartosc+10)
         }
       }
@@ -847,10 +900,18 @@
         pole3d.strokeStyle="Brown";
 
         for(var i=0; i<PunktyTab.length;i++){
-          if(PunktyTab[i]!=undefined)
-          pole3d.fillRect(398+rzutuj(i).X,398+rzutuj(i).Y,4,4);
-        }
+          if(PunktyTab[i]!=undefined){
+            pole3d.fillRect(398+rzutuj(i).X,398+rzutuj(i).Y,4,4);
 
+          }
+        }
+        pole3d.fillStyle = "#008800";
+        pole3d.font = "20px Calibri";
+        if(pasekJest){
+          for(var i =0; i<zaznaczonePunkty.length; i++){
+              pole3d.fillText(zaznaczonePunkty[i],408+ rzutuj(zaznaczonePunkty[i]).X,410+ rzutuj(zaznaczonePunkty[i]).Y );
+          }
+        }
         for(var i=0; i<LinieTab.length;i++){
           if(LinieTab[i].pkt1!=undefined&&PunktyTab[LinieTab[i].pkt1]!=undefined&&PunktyTab[LinieTab[i].pkt2]!=undefined){
             pole3d.moveTo(400+rzutuj(LinieTab[i].pkt1).X,400+rzutuj(LinieTab[i].pkt1).Y);
