@@ -299,20 +299,36 @@
 	 var rysujSkaleXY = function(){
 		rysowandoXY.fillStyle = "White";
 		rysowandoXY.fillRect(0,0,800,800);
-		for (var i = 0; i<=(Xwartosc*10); i++){
-			rysowandoXY.fillRect(((i*80/Xwartosc)-1),0,1,800);
-			if(i%10===0){
+		for (var i = 0; i<=Xwartosc*100; i++){
+      if(Xwartosc <= 2){
+        rysowandoXY.fillStyle ="Green";
+        rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,1,800);
+      }
+      if(i%10===0){
+        rysowandoXY.fillStyle = "#ff3333";
+        	rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,1,800);
+      }
+
+			if(i%100===0){
 				rysowandoXY.fillStyle = "#3333ff";
-				rysowandoXY.fillRect(((i*80/Xwartosc)-1),0,2,800);
-				rysowandoXY.fillStyle = "#ff3333";
+				rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,2,800);
+
 			}
 		}
-		for (var i = 0; i<=(Ywartosc*10); i++){
-			rysowandoXY.fillRect(0,((i*80/Ywartosc)-1),800,1);
-			if(i%10===0){
+    for (var i = 0; i<=Ywartosc*100; i++){
+      if(Ywartosc <= 2){
+        rysowandoXY.fillStyle ="Green";
+        rysowandoXY.fillRect(0, ((i*8/Ywartosc)-1),800,1);
+      }
+      if(i%10===0){
+        rysowandoXY.fillStyle = "#ff3333";
+        	rysowandoXY.fillRect(0, ((i*8/Ywartosc)-1),800,1);
+      }
+
+			if(i%100===0){
 				rysowandoXY.fillStyle = "#3333ff";
-				rysowandoXY.fillRect(0,((i*80/Ywartosc)-1),800,2);
-				rysowandoXY.fillStyle = "#ff3333";
+				rysowandoXY.fillRect(0,((i*8/Ywartosc)-1),800,2);
+
 			}
 		}
 	}
@@ -320,44 +336,76 @@
   var rysujSkaleYZ = function(){
    rysowandoYZ.fillStyle = "White";
    rysowandoYZ.fillRect(0,0,800,800);
-   for (var i = 0; i<=(Zwartosc*10); i++){
-       rysowandoYZ.fillRect(((i*80/Zwartosc)-1),0,1,800);
-       if(i%10===0){
-       rysowandoYZ.fillStyle = "#3333ff";
-       rysowandoYZ.fillRect(((i*80/Zwartosc)-1),0,2,800);
-       rysowandoYZ.fillStyle = "#ff3333";
-       }
+   for (var i = 0; i<=Zwartosc*100; i++){
+     if(Zwartosc <= 2){
+       rysowandoYZ.fillStyle ="Green";
+       rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,1,800);
      }
-   for (var i = 0; i<=(Ywartosc*10); i++){
-       rysowandoYZ.fillRect(0,((i*80/Ywartosc)-1),800,1);
-       if(i%10===0){
-       rysowandoYZ.fillStyle = "#3333ff";
-       rysowandoYZ.fillRect(0,((i*80/Ywartosc)-1),800,2);
+     if(i%10===0){
        rysowandoYZ.fillStyle = "#ff3333";
-       }
+         rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,1,800);
      }
+
+     if(i%100===0){
+       rysowandoYZ.fillStyle = "#3333ff";
+       rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,2,800);
+
+     }
+   }
+   for (var i = 0; i<=Ywartosc*100; i++){
+     if(Ywartosc <= 2){
+       rysowandoYZ.fillStyle ="Green";
+       rysowandoYZ.fillRect(0,((i*8/Ywartosc)-1),800,1);
+     }
+     if(i%10===0){
+       rysowandoYZ.fillStyle = "#ff3333";
+         rysowandoYZ.fillRect(0,((i*8/Ywartosc)-1),800,1);
+     }
+
+     if(i%100===0){
+       rysowandoYZ.fillStyle = "#3333ff";
+       rysowandoYZ.fillRect(0, ((i*8/Ywartosc)-1),800,2);
+
+     }
+   }
  }
 	//////////////////////////////////////////////////////
 	 var rysujSkaleZX = function(){
 		rysowandoZX.fillStyle = "White";
 		rysowandoZX.fillRect(0,0,800,800);
-		for (var i = 0; i<=(Xwartosc*10); i++){
-				rysowandoZX.fillRect(((i*80/Xwartosc)-1),0,1,800);
-				if(i%10===0){
-				rysowandoZX.fillStyle = "#3333ff";
-				rysowandoZX.fillRect(((i*80/Xwartosc)-1),0,2,800);
-				rysowandoZX.fillStyle = "#ff3333";
-				}
-			}
-		for (var i = 0; i<=(Zwartosc*10); i++){
-				rysowandoZX.fillRect(0,((i*80/Zwartosc)-1),800,1);
-				if(i%10===0){
-				rysowandoZX.fillStyle = "#3333ff";
-				rysowandoZX.fillRect(0,((i*80/Zwartosc)-1),800,2);
-				rysowandoZX.fillStyle = "#ff3333";
-				}
+    for (var i = 0; i<=Xwartosc*100; i++){
+      if(Xwartosc <= 2){
+        rysowandoZX.fillStyle ="Green";
+        rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
-	  }
+      if(i%10===0){
+        rysowandoZX.fillStyle = "#ff3333";
+          rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,1,800);
+      }
+
+      if(i%100===0){
+        rysowandoZX.fillStyle = "#3333ff";
+        rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,2,800);
+
+      }
+    }
+    for (var i = 0; i<=Zwartosc*100; i++){
+      if(Zwartosc <=2){
+        rysowandoZX.fillStyle ="Green";
+        rysowandoZX.fillRect(0,((i*8/Zwartosc)-1),800,1);
+      }
+      if(i%10===0){
+        rysowandoZX.fillStyle = "#ff3333";
+          rysowandoZX.fillRect(0,((i*8/Zwartosc)-1),800,1);
+      }
+
+      if(i%100===0){
+        rysowandoZX.fillStyle = "#3333ff";
+        rysowandoZX.fillRect(0, ((i*8/Zwartosc)-1),800,2);
+
+      }
+    }
+	}
 	//////////////////////////////////////////////////////
    var sprzezenieObsluga = function(){
      $("#sprzezenie").text("sprzężenie: nie");
