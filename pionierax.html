@@ -2,12 +2,29 @@
 
 <html lang="pl-PL">
 	<head>
+    <style>
+      .p{
+        position:relative;
+        top:64px;
+        left:450px;
+        border-style: solid;
+        border-color: #00ff00;
+        border-radius: 0px;
+        border-width: 1px;
+      }
+      .p:hover{
+        filter: brightness(80%);
+      }
+      .p:active{
+        filter: brightness(70%);
+      }
+    </style>
     <meta charset="utf-8" >
 		<title>
 			Pionierax
 		</title>
 	</head>
-	<body style="background-color:#77ff77">
+	<body style="background-color:#000000">
 		<script src="https://code.jquery.com/jquery-2.1.0.js">
 
     </script>
@@ -18,26 +35,33 @@
     	<div id="YZ" style="position:absolute; top:20%; left: 50%; width: 50%; height:40%;overflow: scroll;  ">  <canvas id="poleYZ" width="800" height="800"> </canvas></div>
 			<div id="ZX" style="position:absolute; top:60%; left: 0px; width: 50%; height:40%;overflow: scroll; ">  <canvas id="poleZX" width="800" height="800" > </canvas></div>
 		<div id="pole3d" style="position:absolute; top:60%; left: 50%; width: 50%; height:40%;overflow: scroll; "> <canvas id="3d" width="800" height="800" ></canvas></div>
-    <p id="suma" style ="background-color: White; position: fixed; top: 0px; right:0%" onclick="if(rozwoj){rozwoj=false;}else{rozwoj=true;}"></p>
-    <a id="pobierz" style ="background-color: White; color: Blue; position: fixed; top: 0px;left:1100px">Pobierz</a>
-    <p id="ostrzezeniaX" style ="color: red; position: fixed; top: 10px;left:400px"></p>
-    <p id="ostrzezeniaY" style ="color: red; position: fixed; top: 25px;left:400px"></p>
-    <p id="ostrzezeniaZ" style ="color: red; position: fixed; top: 40px;left:400px"></p>
-    <p id="tryb" style="font-size: 20px; position: fixed; top: 10px; left: 300px; background-color: White">
-      tryb: przesuwanie punktów
-    </p>
-    <h2 id="napisZX" style="position:absolute; left: 0%; top: 57%">Widok od góry (ZX)</h2>
-    <h2 id="napisYZ"style="position:absolute; left: 51%; top:17%">Widok od lewej (YZ)</h2>
-    <h2 id="napisXY" style="position:absolute; left: 0%; top:17% ">Widok od przodu (XY)</h2>
-    <p id="sprzezenie" style="position:fixed; background-color: White;top:-10px; left:300px">sprzężenie: tak</p>
-    <p  style="position: fixed; top: -20px; background-color: White" >metry w osi X:<input id="X" type="text" value="10"onchange="Xmodyfikacja(this);"/> </p>
-    <p  style="position: fixed; top: 0px; background-color: White">metry w osi Y:<input id="Y" type="text" value="10"onchange="Ymodyfikacja(this);"/></p>
-    <p  style="position: fixed; top: 20px; background-color: White">metry w osi Z:<input id="Z" type="text" value="10"onchange="Zmodyfikacja(this);"/></p>
-    <p id="ulozenie" style="font-size: 20px; position: fixed; top: 40px; left: 200px; background-color: White">
-      ułożenie: plastyczne
-    </p>
-    <canvas id="pasek" width="0" height = "40" style="position: fixed; top: 60px"></canvas>
-    <input type="file" id="plik" style="position:fixed; top:0px; left:500px"
+    <h2 id="napisZX" style="color:#00ff00;position:absolute; left: 0%; top: 57%">Widok od góry (ZX)</h2>
+    <h2 id="napisYZ"style="color:#00ff00;position:absolute; left: 51%; top:17%">Widok od lewej (YZ)</h2>
+    <h2 id="napisXY" style="color:#00ff00;position:absolute; left: 0%; top:17% ">Widok od przodu (XY)</h2>
+    <div style="position:fixed; left: 0px; top:0px; width:100%; height:124px; background-color: #000000" >
+      <img id="11" class="p" src="Przesuwanie.png" width="50" height="50" onclick="tworzPunkt({keyCode: 82})">
+      <img id="22" class="p"src="UsuwaniePunktow.png" width="50" height="50"onclick="tworzPunkt({keyCode:85 })">
+      <img id="33" class="p"src="EdycjaLinii.png" width="50" height="50"onclick="tworzPunkt({keyCode:76 })">
+      <img id="44" class="p"src="UstawianieSrodka.png" width="50" height="50"onclick="tworzPunkt({keyCode: 88})">
+
+      <img id="55" class="p"src="Cofanie.png" width="50" height="50"style="position:relative;left:460px" onclick="tworzPunkt({keyCode: 90})">
+      <img id="66" class="p"src="TworzeniePunktu.png" width="50" height="50"style="position:relative;left:460px"onclick="tworzPunkt({keyCode: 80})">
+    </div>
+
+    <p class="p"id="suma" style ="background-color: #000000;color:#00ff00; position: fixed; top: 0px; left:1200px" onclick="if(rozwoj){rozwoj=false;}else{rozwoj=true;}"></p>
+    <a id="pobierz"class="p" style ="text-decoration: none;background-color: #000000; color: #00ff00; position: fixed; top: 37px;left:950px">zapisz projekt na dysku</a>
+
+
+    <img  width="50" height="50" id="sprzezenie"class="p" src="sprzezenie.png" style="position:fixed; background-color: White; top:4px; left:287px; filter: brightness(70%)">
+    <p  style="color:#00ff00;position: fixed; top: -20px; background-color: Black" >metry w osi X:<input id="X" type="text" value="10"onchange="Xmodyfikacja(this);" style=" border:2px solid #00ff00; background: Black; color:#00ff00 "/> </p>
+    <p  style="color:#00ff00;position: fixed; top: 0px; background-color: Black">metry w osi Y:<input id="Y" type="text" value="10"onchange="Ymodyfikacja(this);"style="border:2px solid #00ff00;background: Black; color:#00ff00;position:relative; left:2px"/></p>
+    <p  style="color:#00ff00;position: fixed; top: 20px; background-color: Black">metry w osi Z:<input id="Z" type="text" value="10"onchange="Zmodyfikacja(this);"style="border:2px solid #00ff00;background: Black; color:#00ff00;  position:relative; left:2px"/></p>
+    <img id="ulozenie" width="50" height="50" class="p" src="plastic.png" style=" position: fixed; top: 64px; left: 380px">
+    <img class="p" src="pomoc.png" width="50" height = "50" style="position:fixed; top:3px"onclick="document.getElementById('pomoc').style.display = 'initial'">
+    <canvas id="pasek" width="0" height = "40" style="position: fixed; top: 80px"></canvas>
+    <div style="position:fixed; top:0px; left:500px;">
+      <label class="p"for="plik" style="background-color: #000000; color:#00ff00">wczytaj projekt z dysku</label>
+    <input type="file" id="plik" style=" visibility:hidden"
     onchange="
     var odczyt = new FileReader();
     var lipon;
@@ -46,9 +70,50 @@
       window.zlitujcieSieZTymiNazwami = true;
     };
     odczyt.readAsText(event.target.files[0], 'UTF-8');"  >
-    <input style="position:fixed;top:0px;left:420px" value="pomoc" type="submit" onclick="
-    alert('Witaj w programie pionierax. Oto jego instrukcja obsługi: Cała edycja polega na pracy w trzech trybach: przesuwania punktów, usuwania punktów i edycji linii(naraz usuwania i dodawania). Ustawia się je kolejno klawiszami R U L. W pierwszym trybie kliknięcie na punkt powoduje jego podniesienie, kolejne upuszczenie. W drugim kliknięcie na punkt powoduje usunięcie. W trzecim kliknięcie na punkt powoduje zaczepienie na nim nowej linii, a kliknięcie na inny zakotwiczenie także w nim. Jeśli tą operacje wykona się na punktach pomędzy którymi jest już żerdź, nie zostanie stworzona nowa, lecz stara zostanie usunięta. Jeśli jakiekolwiek kliknięcie mające na celu wybrać punkt (każde za wyjątkiem upuszczającego) natrafi na dwa nachodzące na siebie punkty, u góry po lewej pojawia się pasek, na którym można wybrać o który punkt chodzi (każdy punkt ma swój numer, który w takiej sytuacji zostanie wyświetlony na wszystkich płaszczyznach i dzięki temu możemy wybrać).  Punkty 3d dodać możesz wciskając P. Na czwartym polu znajduje się widok w 3d (nieperspektywiczny bo równoległy, to znaczy każdy obiekt widać pod tym samym kątem). Sterować kątem rzutowania można za pomocą kalwiszy WSAD. W prawym górnym rogu znajdują się 3 pola, w których możemy ustawić skalę przestrzeni 3d (X-skala lewo prawo, Y-skala góra dół, Z-skala tył przód) w jakiej chcemy pracować. Domyślnie są one spzężone, to znaczy zmiana wartości jednej z nich powoduje zmianę na taką samą wartość reszty. Jeśli nie chcemy sprzężenia, klikamy na pole tekstowe położone na prawo od wyżej wymienionych trzech z napisem SPRZĘŻENIE. Każdy projekt możemy zapisać w postaci pliku PIONEER. Aby to zrobić klkamy na przycisk POBIERZ na górze ekranu, nieco po lewej. Możemy także wczytać plik już zapisany, klikając na szare pole z napisem PRZEGLĄDAJ. Wybierzemy wtedy projekt z pamięci komputera. Po lewej na górze znajduje się spis utworzonych żerdzi wraz z ich długościami i ilością (żeby otworzyć trzeba kliknąć, żeby zamknąć - znowu kliknąć). Jak widzisz, główne pole składa się z czterech kwadratów. Mogą one być ułożone na dwa sposoby: plastyczny i pełnowymiarowy. W tym pierwszym masz do dyspozycji 4 okienka równej wielkości, znajdujące się cały czas na ekranie. Możesz przez nie oglądać dowolne miejsce każdego z pól, ustawiając to za pomocą skroli. W drugim trybie z kolei wszystkie okna zajmują dokładnie tyle miejsca ile potrzebują, i możesz widzieć je całe (naturalnie nie naraz). Jeśli chcesz przybliżyc lub oddalić obraz, użyj przeglądarkowego przybliżenia.');
-    "/>
+  </div>
+  <div id="pomoc" style="background-color:Black; position:absolute; left: 0%; top:0%;width:100%;height:100%" >
+    <img width="50" height="50" src="krzyzyk.png" class="p" onclick="document.getElementById('pomoc').style.display = 'none'" style="position:absolute; top:10px;left:59%; ">
+    <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:55pt; position:absolute; top:-48px; left:40%"> pomoc</h1>
+    <div style="width:19%; height:80%; position: absolute; left:1%; top:20%">
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:18pt; position:relative; top:-20px; left:30px">dostosowywanie</h1>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">plastyczny ekran&nbsp;<img  width="40" height="40" class="p" src="plastic.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając przycisk zmieniasz ułożenie okien edytora. Jak to dokładnie działa zobaczysz sam/a.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">zmiana skali</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wpisując nową wartość w dowolnej skali i wciskając enter skala przyjmuje tą wartość (3 pola na samej górze po lewej). Domyślnie ustawione jest sprzężenie, tzn. zmieniając jedną skalę zmieniają się pozostałe. Można to zmienić klikając na przycisk "Sprzężenie".</p>
+
+    </div>
+    <div style="width:50%; height:106%; position: absolute; left:20%; top:20%; border-left-color: #00ff00; border-left-width: 2px; border-style:solid; border-right-color: #00ff00; border-right-width: 2px"><div style="width:99%; position:relative; left: 1.6%">
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:18pt; position:relative; top:-20px; left:257px">edytowanie</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">praca nad projektem odbywa się głównie w 4 trybach: przesuwania punktów, usuwania punktów, edytowania linii i środkowania. Każda akcja odbywa się poprzez pojedyncze kliknięcie. Jeśli kliknięcie obejmie więcej niż jeden punkt, po lewej u góry pojawi się możliwość wybrania o który punkt chodzi. Wciskając shift pozycja myszy odczytywana jest tak, jakby znajdowała się na najbliższej kratce.</p>
+
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">przesuwanie punktów&nbsp;<img  width="40" height="40" class="p" src="Przesuwanie.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">klikając na punktu podnosi się go, klikając drugi raz zostawia się go w miejscu gdzie znajduje się mysz.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">usuwanie punktów&nbsp;<img  width="40" height="40" class="p" src="UsuwaniePunktow.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">klikając usuwa się punkt.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">edycja linii&nbsp;<img  width="40" height="40" class="p" src="EdycjaLinii.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">klikając na pierwszy punkt zakotwiczamy na nim jeden koniec linii (żerdzi), a na drugi - drugi koniec.</p>
+
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">środkowanie&nbsp;<img  width="40" height="40" class="p" src="UstawianieSrodka.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">miejsce w które klikniemy przesunie się na środek. </p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">dodawanie pkt&nbsp;<img  width="40" height="40" class="p" src="TworzeniePunktu.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając przycisk "P" lub wybierając opcję na ekranie dodajemy punkt do projektu.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">cofanie&nbsp;<img  width="40" height="40" class="p" src="Cofanie.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając przycisk "Z" lub wybierając opcję na ekranie cofamy poprzednią akcję.</p>
+    </div></div>
+    <div style="width:29%; height:80%; position: absolute; left:71%; top:20%">
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:18pt; position:relative; top:-20px; left:150px">projekt</h1>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">zapisywanie projektu</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając "zapisz projekt na dysku" pobierasz projekt i zapisujesz na dysku.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">otwieranie projektu</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając "wczytaj projekt z dysku" otwierasz projekt który możesz wybrać za pomocą okienka otwierania pliku. Uwaga! Tracisz wtedy niezapisaną pracę.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">spis żerdzi</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając "Żerdzie:" wysuwa się lista żerdzi wraz z ich długościami i liczbą. Drugie kliknięcie zamyka listę.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">widok projektu</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">w oknie na dole po prawej wyświetla się obraz projektu widziany z dowolnej perspektywy, wybieranej przez przyciski WSAD.</p>
+    </div>
+
+  </div>
+
 		<script>
     var srodekTryb = false;
     var zapis = [];
@@ -125,16 +190,14 @@
       }
     }
     var odczytano = function(tekst){
+      pkt1 = undefined;
       var bufor = "";
       var punkt =-1;
       var linia =-1;
       var pozycja = 0;
-
       PunktyTab=[];
       LinieTab=[];
-
       while(pozycja<tekst.length){
-
         if(tekst.charAt(pozycja)==="x"){
           PunktyTab[punkt].x = parseFloat(bufor);
           pozycja++;
@@ -153,16 +216,12 @@
           bufor="";
           continue;
         }
-
-
         if(tekst.charAt(pozycja)==="b"){
           punkt++;
           PunktyTab.push(new Punkt(undefined, undefined, undefined));
-
           pozycja++;
           continue;
         }
-
         if(tekst.charAt(pozycja)==="l"){
           linia++;
           LinieTab.push(new Linia(undefined,undefined));
@@ -191,24 +250,22 @@
   var rysowandoXY = document.getElementById("poleXY").getContext("2d");
   rysowandoXY.fillStyle = "#ffffff";
   rysowandoXY.fillRect(0, 0, 800, 800);
-
   var rysowandoYZ = document.getElementById("poleYZ").getContext("2d");
   rysowandoYZ.fillStyle = "#ffffff";
   rysowandoYZ.fillRect(0, 0, 800, 800);
-
 		var rysowandoZX = document.getElementById("poleZX").getContext("2d");
 		rysowandoZX.fillStyle = "#ffffff";
 		rysowandoZX.fillRect(0, 0, 800, 800);
 		var pasek = document.getElementById("pasek").getContext("2d");
 	//////////////////////////////////////
-    rysowandoXY.strokeStyle="Brown";
-    rysowandoXY.lineWidth = 6;
+    rysowandoXY.strokeStyle="#00ffff";
+    rysowandoXY.lineWidth = 4;
     rysowandoXY.beginPath();
-    rysowandoYZ.strokeStyle="Brown";
-    rysowandoYZ.lineWidth = 6;
+    rysowandoYZ.strokeStyle="#00ffff";
+    rysowandoYZ.lineWidth = 4;
     rysowandoYZ.beginPath();
-    rysowandoZX.strokeStyle="Brown";
-    rysowandoZX.lineWidth = 6;
+    rysowandoZX.strokeStyle="#00ffff";
+    rysowandoZX.lineWidth = 4;
     rysowandoZX.beginPath();
 	//////////////////////////////////////
 	 var Xwartosc = 10;
@@ -218,7 +275,6 @@
    var aktualizujDlugosci = function(grfrfsr){
      $("#suma").text("Żerdzie:");
      for(var i = 0; i<LinieTab.length; i++){
-
        zaliczono = false;
        for(var ii = 0; ii<dlugosciTab.length; ii++){
 
@@ -230,15 +286,12 @@
        }
        if(!zaliczono){
          dlugosciTab.push(new dlugosc(mierz(i), 1));
-
        }
      }
      for(var i = 0; i<dlugosciTab.length; i++){
-
        if(rozwoj){
          $("#suma").append("<br/>"+dlugosciTab[i].liczba + "x "+dlugosciTab[i].dlug+"dm");
        }
-
      }
      dlugosciTab=[];
 		 //==============================
@@ -267,37 +320,38 @@
        odczytano(wartoscOdczytana);
      }
    }
-   setInterval(aktualizujDlugosci, 500);
+   setInterval(aktualizujDlugosci, 50);
    var rzutuj= function(numer){
-     return {X: Math.sin(Math.radians(obrotPlaski+90))*(PunktyTab[numer].x-Xwartosc*5)*56.5685/Xwartosc+Math.sin(Math.radians(obrotPlaski))*(PunktyTab[numer].z-Zwartosc*5)*56.5685/Zwartosc,
-     Y:         (Math.sin(Math.radians(obrotPionowy))*(PunktyTab[numer].y-Ywartosc*5)*56.5685/Ywartosc)+ (Math.sin(Math.radians(obrotPionowy+90))*(Math.sin(Math.radians(obrotPlaski))*(PunktyTab[numer].x-Xwartosc*5)*56.5685/Xwartosc-Math.sin(Math.radians(obrotPlaski+90))*(PunktyTab[numer].z-Zwartosc*5)*56.5685/Zwartosc))};
+     return {X: Math.sin(Math.radians(obrotPlaski+90))*(PunktyTab[numer].x*56.5685-400)/Xwartosc+Math.sin(Math.radians(obrotPlaski))*(PunktyTab[numer].z*56.5685-400)/Zwartosc,
+     Y:         (Math.sin(Math.radians(obrotPionowy))*(PunktyTab[numer].y*56.5685-400)/Ywartosc)+ (Math.sin(Math.radians(obrotPionowy+90))*(Math.sin(Math.radians(obrotPlaski))*(PunktyTab[numer].x*56.5685-400)/Xwartosc-Math.sin(Math.radians(obrotPlaski+90))*(PunktyTab[numer].z*56.5685-400)/Zwartosc))};
    }
    var ulozenie = true;
    $("#ulozenie").click(function(klik){
      if(ulozenie){
-       $("#ulozenie").text("ułożenie: pełnowymiarowe");
+       document.getElementById("ulozenie").style.filter= "brightness(70%)";
        document.getElementById("XY").style="position: absolute;overflow: visible; top: 200px; left: 0px";
        document.getElementById("ZX").style="position: absolute;overflow: visible; top: 1020px; left: 0px";
        document.getElementById("YZ").style="position: absolute;overflow: visible; top: 200px; left: 820px";
-       document.getElementById("pole3d").style="position: absolute;overflow: visible; top: 1020px; left: 820px";
-       document.getElementById("napisZX").style="position:absolute; left:3px ; top: 1023px";
-       document.getElementById("napisYZ").style="position:absolute; left: 823px; top:203px";
-       document.getElementById("napisXY").style="position:absolute; left: 3px; top:203px ";
+       document.getElementById("pole3d").style="color:#00ff00;position: absolute;overflow: visible; top: 1020px; left: 820px";
+       document.getElementById("napisZX").style="color:#00ff00;position:absolute; left:3px ; top: 1023px";
+       document.getElementById("napisYZ").style="color:#00ff00;position:absolute; left: 823px; top:203px";
+       document.getElementById("napisXY").style="color:#00ff00;position:absolute; left: 3px; top:203px ";
        ulozenie = false;
      }else{
-       $("#ulozenie").text("ułożenie: plastyczne");
+       document.getElementById("ulozenie").style.filter= "brightness(100%)";
+
        document.getElementById("XY").style="position:absolute; top:20%; left: 0%; width: 50%; height:40%;overflow: scroll; ";
        document.getElementById("ZX").style="position:absolute; top:20%; left: 50%; width: 50%; height:40%;overflow: scroll";
        document.getElementById("YZ").style="position:absolute; top:60%; left: 0px; width: 50%; height:40%;overflow: scroll;";
        document.getElementById("pole3d").style="position:absolute; top:60%; left: 50%; width: 50%; height:40%;overflow: scroll;";
-       document.getElementById("napisZX").style="position:absolute; left: 0%; top: 57%";
-       document.getElementById("napisYZ").style="position:absolute; left: 51%; top:17%";
-       document.getElementById("napisXY").style="position:absolute; left: 0%; top:17% ";
+       document.getElementById("napisZX").style="color:#00ff00;position:absolute; left: 0%; top: 57%";
+       document.getElementById("napisYZ").style="color:#00ff00;position:absolute; left: 51%; top:17%";
+       document.getElementById("napisXY").style="color:#00ff00;position:absolute; left: 0%; top:17% ";
        ulozenie = true;
      }
    });
 	 var rysujSkaleXY = function(){
-		rysowandoXY.fillStyle = "White";
+		rysowandoXY.fillStyle = "Black";
 		rysowandoXY.fillRect(0,0,800,800);
 		for (var i = 0; i<=Xwartosc*100; i++){
       if(Xwartosc <= 2){
@@ -305,14 +359,12 @@
         rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
       if(i%10===0){
-        rysowandoXY.fillStyle = "#ff3333";
+        rysowandoXY.fillStyle = "#ff0000";
         	rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
-
 			if(i%100===0){
-				rysowandoXY.fillStyle = "#3333ff";
+				rysowandoXY.fillStyle = "#0000ff";
 				rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,2,800);
-
 			}
 		}
     for (var i = 0; i<=Ywartosc*100; i++){
@@ -321,20 +373,18 @@
         rysowandoXY.fillRect(0, ((i*8/Ywartosc)-1),800,1);
       }
       if(i%10===0){
-        rysowandoXY.fillStyle = "#ff3333";
+        rysowandoXY.fillStyle = "#ff0000";
         	rysowandoXY.fillRect(0, ((i*8/Ywartosc)-1),800,1);
       }
-
 			if(i%100===0){
-				rysowandoXY.fillStyle = "#3333ff";
+				rysowandoXY.fillStyle = "#0000ff";
 				rysowandoXY.fillRect(0,((i*8/Ywartosc)-1),800,2);
-
 			}
 		}
 	}
 	//////////////////////////////////////////////////////
   var rysujSkaleYZ = function(){
-   rysowandoYZ.fillStyle = "White";
+   rysowandoYZ.fillStyle = "Black";
    rysowandoYZ.fillRect(0,0,800,800);
    for (var i = 0; i<=Zwartosc*100; i++){
      if(Zwartosc <= 2){
@@ -342,14 +392,12 @@
        rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,1,800);
      }
      if(i%10===0){
-       rysowandoYZ.fillStyle = "#ff3333";
+       rysowandoYZ.fillStyle = "#ff0000";
          rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,1,800);
      }
-
      if(i%100===0){
-       rysowandoYZ.fillStyle = "#3333ff";
+       rysowandoYZ.fillStyle = "#0000ff";
        rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,2,800);
-
      }
    }
    for (var i = 0; i<=Ywartosc*100; i++){
@@ -358,20 +406,18 @@
        rysowandoYZ.fillRect(0,((i*8/Ywartosc)-1),800,1);
      }
      if(i%10===0){
-       rysowandoYZ.fillStyle = "#ff3333";
+       rysowandoYZ.fillStyle = "#ff0000";
          rysowandoYZ.fillRect(0,((i*8/Ywartosc)-1),800,1);
      }
-
      if(i%100===0){
-       rysowandoYZ.fillStyle = "#3333ff";
+       rysowandoYZ.fillStyle = "#0000ff";
        rysowandoYZ.fillRect(0, ((i*8/Ywartosc)-1),800,2);
-
      }
    }
  }
 	//////////////////////////////////////////////////////
 	 var rysujSkaleZX = function(){
-		rysowandoZX.fillStyle = "White";
+		rysowandoZX.fillStyle = "Black";
 		rysowandoZX.fillRect(0,0,800,800);
     for (var i = 0; i<=Xwartosc*100; i++){
       if(Xwartosc <= 2){
@@ -379,14 +425,12 @@
         rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
       if(i%10===0){
-        rysowandoZX.fillStyle = "#ff3333";
+        rysowandoZX.fillStyle = "#ff0000";
           rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
-
       if(i%100===0){
-        rysowandoZX.fillStyle = "#3333ff";
+        rysowandoZX.fillStyle = "#0000ff";
         rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,2,800);
-
       }
     }
     for (var i = 0; i<=Zwartosc*100; i++){
@@ -395,99 +439,77 @@
         rysowandoZX.fillRect(0,((i*8/Zwartosc)-1),800,1);
       }
       if(i%10===0){
-        rysowandoZX.fillStyle = "#ff3333";
+        rysowandoZX.fillStyle = "#ff0000";
           rysowandoZX.fillRect(0,((i*8/Zwartosc)-1),800,1);
       }
-
       if(i%100===0){
-        rysowandoZX.fillStyle = "#3333ff";
+        rysowandoZX.fillStyle = "#0000ff";
         rysowandoZX.fillRect(0, ((i*8/Zwartosc)-1),800,2);
-
       }
     }
 	}
 	//////////////////////////////////////////////////////
    var sprzezenieObsluga = function(){
-     $("#sprzezenie").text("sprzężenie: nie");
      sprzezenie = !sprzezenie;
+
      if(sprzezenie){
-       $("#sprzezenie").text("sprzężenie: tak");
+       document.getElementById("sprzezenie").style.filter="brightness(70%)";
+     }else{
+       document.getElementById("sprzezenie").style.filter="brightness(100%)";
      }
 
    }
    $("#sprzezenie").click(sprzezenieObsluga);
 	 var Xmodyfikacja = function (zdarzenie){
-
-
 		  if(isNaN(zdarzenie.value)||zdarzenie.value<=0){
 		     alert("Zła wartość! Zmień to");
          return;
 		  } else{
         Xwartosc = parseFloat(zdarzenie.value);
       }
-
-
       if(sprzezenie){
         document.getElementById("Z").value=Xwartosc;
         document.getElementById("Y").value=Xwartosc;
         Zwartosc=Xwartosc;
         Ywartosc=Xwartosc;
-        $("#ostrzezeniaZ").text("");
-          $("#ostrzezeniaY").text("");
       }
-      $("#ostrzezeniaX").text("");
 		};
     var Ymodyfikacja = function (zdarzenie){
-
-
        if(isNaN(zdarzenie.value)||zdarzenie.value<=0){
           alert("Zła wartość! Zmień to");
           return;
        } else{
          Ywartosc = parseFloat(zdarzenie.value);
        }
-
-
        if(sprzezenie){
          document.getElementById("Z").value=Ywartosc;
          document.getElementById("X").value=Ywartosc;
          Zwartosc=Ywartosc;
          Xwartosc=Ywartosc;
-
-         $("#ostrzezeniaZ").text("");
-           $("#ostrzezeniaX").text("");
        }
-       $("#ostrzezeniaY").text("");
      };
      var Zmodyfikacja = function (zdarzenie){
-
-
         if(isNaN(zdarzenie.value)||zdarzenie.value<=0){
            alert("Zła wartość! Zmień to");
             return;
         } else{
            Zwartosc = parseFloat(zdarzenie.value);
          }
-
-
          if(sprzezenie){
            document.getElementById("X").value=Zwartosc;
            document.getElementById("Y").value=Zwartosc;
            Xwartosc=Zwartosc;
            Ywartosc=Zwartosc;
-
-
-
-           $("#ostrzezeniaY").text("");
-             $("#ostrzezeniaX").text("");
          }
-         $("#ostrzezeniaZ").text("");
       };
 		/////////////////////////////////////
-
 	//////////////////////////////////////
 		var tworzPunkt = function (klik){
       if(klik.keyCode === 76||klik.keyCode === 85||klik.keyCode===82||klik.keyCode===88){
+        document.getElementById("11").style.filter = "brightness(100%)";
+        document.getElementById("22").style.filter = "brightness(100%)";
+        document.getElementById("33").style.filter = "brightness(100%)";
+        document.getElementById("44").style.filter = "brightness(100%)";
         pkt1 = undefined;
         srodekTryb=false;
         trybLinie = false;
@@ -503,19 +525,19 @@
 		  }
       if(klik.keyCode === 76){
         trybLinie=true;
-        $("#tryb").text("tryb: edycja lini");
+        document.getElementById("33").style.filter = "brightness(70%)";
       }
       if(klik.keyCode === 85){
         trybUsuwanie=true;
-        $("#tryb").text("tryb: usuwanie punktów");
+        document.getElementById("22").style.filter = "brightness(70%)";
       }
       if(klik.keyCode === 88){
         srodekTryb=true;
-        $("#tryb").text("tryb: przesuwanie obrazu");
+        document.getElementById("44").style.filter = "brightness(70%)";
       }
       if(klik.keyCode===82){
         trybPrzesuwanie = true;
-        $("#tryb").text("tryb: przesuwanie punktów");
+        document.getElementById("11").style.filter = "brightness(70%)";
       }
       if(klik.keyCode===65){
         wcislo="lewo";
@@ -548,7 +570,6 @@
           zapis.pop();
           return;
         }
-
         if(zapis[zapis.length-1].typ === 3){
           LinieTab.pop();
           zapis.pop();
@@ -574,18 +595,17 @@
 			if(!zaznaczono&&!pasekJest){
         if(srodekTryb){
           for(var i = 0; i<PunktyTab.length; i++){
-            PunktyTab[i].x -= (klik.offsetX-400)*Xwartosc/80;
-            PunktyTab[i].z -= (klik.offsetY-400)*Zwartosc/80;
+            PunktyTab[i].x -= Math.round((klik.offsetX-400)*Xwartosc/80);
+            PunktyTab[i].z -= Math.round((klik.offsetY-400)*Zwartosc/80);
           }
           return;
         }
 				for(var i = 0; i<PunktyTab.length; i++){
-					if((PunktyTab[i].x*80/Xwartosc)<(klik.offsetX+10)&&(PunktyTab[i].x*80/Xwartosc)>(klik.offsetX-10)&&(PunktyTab[i].z*80/Zwartosc)<(klik.offsetY+10)&&(PunktyTab[i].z*80/Zwartosc)>(klik.offsetY-10)){
+					if(((PunktyTab[i].x*80-400)/Xwartosc+400)<(klik.offsetX+10)&&((PunktyTab[i].x*80-400)/Xwartosc+400)>(klik.offsetX-10)&&((PunktyTab[i].z*80-400)/Zwartosc+400)<(klik.offsetY+10)&&((PunktyTab[i].z*80-400)/Zwartosc+400)>(klik.offsetY-10)){
             zaznaczonePunkty.push(i);
 					}
 				}
 				if(zaznaczonePunkty.length>1){
-
 					pasekJest = true;
 				}
 				if(zaznaczonePunkty.length===1&&pkt1===undefined&&trybLinie){
@@ -596,9 +616,7 @@
 				if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
 					for(var i = 0; i<LinieTab.length; i++){
 						if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
-
               zapis.push(new Akcja(4, i,  Object.assign({}, LinieTab[i])));
-
 							LinieTab[i].pkt1 = undefined;
 							LinieTab[i].pkt2 = undefined;
 							pkt1 = undefined;
@@ -606,7 +624,6 @@
 							return;
 						}
 					}
-
 					LinieTab.push(new Linia(pkt1, zaznaczonePunkty[0]));
           zapis.push(new Akcja(3, LinieTab.length-1, Object.assign({}, LinieTab[LinieTab.length-1])));
 					pkt1 = undefined;
@@ -615,14 +632,12 @@
 				}
 				if(zaznaczonePunkty.length===1&&trybPrzesuwanie){
           zapis.push(new Akcja(1, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
-
 					aktualnyPunkt = zaznaczonePunkty[0];
 					zaznaczono = true;
 					zaznaczonePunkty = [];
 				}
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
           zapis.push(new Akcja(2, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
-
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -642,20 +657,18 @@
       if(!zaznaczono&&!pasekJest){
         if(srodekTryb){
           for(var i = 0; i<PunktyTab.length; i++){
-
-            PunktyTab[i].x -= (klik.offsetX-400)*Xwartosc/80;
-            PunktyTab[i].y -= (klik.offsetY-400)*Ywartosc/80;
+            PunktyTab[i].x -= Math.round((klik.offsetX-400)*Xwartosc/80);
+            PunktyTab[i].y -= Math.round((klik.offsetY-400)*Ywartosc/80);
           }
           return;
         }
         for(var i = 0; i<PunktyTab.length; i++){
-          if((PunktyTab[i].x*80/Xwartosc)<(klik.offsetX+10)&&(PunktyTab[i].x*80/Xwartosc)>(klik.offsetX-10)&&(PunktyTab[i].y*80/Ywartosc)<(klik.offsetY+10)&&(PunktyTab[i].y*80/Ywartosc)>(klik.offsetY-10)){
+          if(((PunktyTab[i].x*80-400)/Xwartosc+400)<(klik.offsetX+10)&&((PunktyTab[i].x*80-400)/Xwartosc+400)>(klik.offsetX-10)&&((PunktyTab[i].y*80-400)/Ywartosc+400)<(klik.offsetY+10)&&((PunktyTab[i].y*80-400)/Ywartosc+400)>(klik.offsetY-10)){
             zaznaczonePunkty.push(i);
           }
         }
         if(zaznaczonePunkty.length>1){
           pasekJest = true;
-
         }
         if(zaznaczonePunkty.length===1&&pkt1===undefined&&trybLinie){
           pkt1 = zaznaczonePunkty[0];
@@ -665,7 +678,6 @@
         if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
           for(var i = 0; i<LinieTab.length; i++){
             if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
-
               zapis.push(new Akcja(4, i,  Object.assign({}, LinieTab[i])));
               LinieTab[i].pkt1 = undefined;
               LinieTab[i].pkt2 = undefined;
@@ -688,7 +700,6 @@
         }
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
           zapis.push(new Akcja(2, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
-
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -708,20 +719,18 @@
       if(!zaznaczono&&!pasekJest){
         if(srodekTryb){
           for(var i = 0; i<PunktyTab.length; i++){
-
-            PunktyTab[i].y -= (klik.offsetY-400)*Ywartosc/80;
-            PunktyTab[i].z -= (klik.offsetX-400)*Zwartosc/80;
+            PunktyTab[i].y -= Math.round((klik.offsetY-400)*Ywartosc/80);
+            PunktyTab[i].z -= Math.round((klik.offsetX-400)*Zwartosc/80);
           }
           return;
         }
         for(var i = 0; i<PunktyTab.length; i++){
-          if((PunktyTab[i].z*80/Zwartosc)<(klik.offsetX+10)&&(PunktyTab[i].z*80/Zwartosc)>(klik.offsetX-10)&&(PunktyTab[i].y*80/Ywartosc)<(klik.offsetY+10)&&(PunktyTab[i].y*80/Ywartosc)>(klik.offsetY-10)){
+          if(((PunktyTab[i].z*80-400)/Zwartosc+400)<(klik.offsetX+10)&&((PunktyTab[i].z*80-400)/Zwartosc+400)>(klik.offsetX-10)&&((PunktyTab[i].y*80-400)/Ywartosc+400)<(klik.offsetY+10)&&((PunktyTab[i].y*80-400)/ Ywartosc+400)>(klik.offsetY-10)){
             zaznaczonePunkty.push(i);
           }
         }
         if(zaznaczonePunkty.length>1){
           pasekJest = true;
-
         }
         if(zaznaczonePunkty.length===1&&pkt1===undefined&&trybLinie){
           pkt1 = zaznaczonePunkty[0];
@@ -731,9 +740,7 @@
         if(zaznaczonePunkty.length===1&&pkt1!=undefined&&trybLinie){
           for(var i = 0; i<LinieTab.length; i++){
             if((LinieTab[i].pkt1 === pkt1 &&LinieTab[i].pkt2 === zaznaczonePunkty[0]) || (LinieTab[i].pkt2 === pkt1 &&LinieTab[i].pkt1 === zaznaczonePunkty[0])){
-
               zapis.push(new Akcja(4, i,  Object.assign({}, LinieTab[i])));
-
               LinieTab[i].pkt1 = undefined;
               LinieTab[i].pkt2 = undefined;
               pkt1 = undefined;
@@ -743,21 +750,18 @@
           }
           LinieTab.push(new Linia(pkt1, zaznaczonePunkty[0]));
           zapis.push(new Akcja(3, LinieTab.length-1, Object.assign({}, LinieTab[LinieTab.length-1])));
-
           pkt1 = undefined;
           zaznaczonePunkty=[];
           return;
         }
         if(zaznaczonePunkty.length===1&&trybPrzesuwanie){
           zapis.push(new Akcja(1, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
-
           aktualnyPunkt = zaznaczonePunkty[0];
           zaznaczono = true;
           zaznaczonePunkty = [];
         }
         if(trybUsuwanie&&zaznaczonePunkty.length ===1){
           zapis.push(new Akcja(2, zaznaczonePunkty[0], Object.assign({}, PunktyTab[zaznaczonePunkty[0]])));
-
           PunktyTab[zaznaczonePunkty[0]].x = undefined;
           PunktyTab[zaznaczonePunkty[0]].z = undefined;
           PunktyTab[zaznaczonePunkty[0]].y = undefined;
@@ -782,9 +786,7 @@
 						if(pkt1!=undefined&&trybLinie){
 							for(var ii = 0; ii<LinieTab.length; ii++){
 								if((LinieTab[ii].pkt1 === pkt1 &&LinieTab[ii].pkt2 === zaznaczonePunkty[i]) || (LinieTab[ii].pkt2 === pkt1 &&LinieTab[ii].pkt1 === zaznaczonePunkty[i])){
-
                   zapis.push(new Akcja(4, ii,  Object.assign({}, LinieTab[ii])));
-
 									LinieTab[ii].pkt1 = undefined;
 									LinieTab[ii].pkt2 = undefined;
 									pkt1 = undefined;
@@ -796,18 +798,15 @@
 							}
 							LinieTab.push(new Linia(pkt1, zaznaczonePunkty[i]));
               zapis.push(new Akcja(3, LinieTab.length-1, Object.assign({}, LinieTab[LinieTab.length-1])));
-
 							pkt1 = undefined;
 						}
 						if(trybPrzesuwanie){
               zapis.push(new Akcja(1, zaznaczonePunkty[i], Object.assign({}, PunktyTab[zaznaczonePunkty[i]])));
-
 							aktualnyPunkt = zaznaczonePunkty[i];
 							zaznaczono = true;
 						}
 						if(trybUsuwanie){
               zapis.push(new Akcja(2, zaznaczonePunkty[i], Object.assign({}, PunktyTab[zaznaczonePunkty[i]])));
-
 							PunktyTab[zaznaczonePunkty[i]].x = undefined;
 							PunktyTab[zaznaczonePunkty[i]].y = undefined;
 							PunktyTab[zaznaczonePunkty[i]].z = undefined;
@@ -826,57 +825,57 @@
       if(srodekTryb){
         poleKlikniecia=2;
       }
-      pozycjaMyszyX=ruch.offsetX*Xwartosc/80;
-      pozycjaMyszyZ = ruch.offsetY*Zwartosc/80;
+      pozycjaMyszyX=((ruch.offsetX-400)*Xwartosc+400)/80;
+      pozycjaMyszyZ = ((ruch.offsetY-400)*Zwartosc+400)/80;
       if(szift){
-        pozycjaMyszyX=Math.round(ruch.offsetX*Xwartosc/80);
-        pozycjaMyszyZ = Math.round(ruch.offsetY*Zwartosc/80);
+        pozycjaMyszyX=Math.round(((ruch.offsetX-400)*Xwartosc+400)/80);
+        pozycjaMyszyZ = Math.round(((ruch.offsetY-400)*Zwartosc+400)/80);
       }
 			if(zaznaczono&&poleKlikniecia===2){
-				PunktyTab[aktualnyPunkt].x = ruch.offsetX*Xwartosc/80;
-				PunktyTab[aktualnyPunkt].z = ruch.offsetY*Zwartosc/80;
+				PunktyTab[aktualnyPunkt].x = ((ruch.offsetX-400)*Xwartosc+400)/80;
+				PunktyTab[aktualnyPunkt].z = ((ruch.offsetY-400)*Zwartosc+400)/80;
 			}
 			if(zaznaczono&&szift&&poleKlikniecia===2){
-				PunktyTab[aktualnyPunkt].x = Math.round(ruch.offsetX*Xwartosc/80);
-				PunktyTab[aktualnyPunkt].z = Math.round(ruch.offsetY*Zwartosc/80);
+				PunktyTab[aktualnyPunkt].x = Math.round(((ruch.offsetX-400)*Xwartosc+400)/80);
+				PunktyTab[aktualnyPunkt].z = Math.round(((ruch.offsetY-400)*Zwartosc+400)/80);
 			}
 		}
     var obslugaRuchuMyszyXY = function(ruch){
       if(srodekTryb){
         poleKlikniecia=0;
       }
-      pozycjaMyszyX=ruch.offsetX*Xwartosc/80;
-      pozycjaMyszyY = ruch.offsetY*Ywartosc/80;
+      pozycjaMyszyX=((ruch.offsetX-400)*Xwartosc+400)/80;
+      pozycjaMyszyY = ((ruch.offsetY-400)*Ywartosc+400)/80;
       if(szift){
-        pozycjaMyszyX=Math.round(ruch.offsetX*Xwartosc/80);
-        pozycjaMyszyY = Math.round(ruch.offsetY*Ywartosc/80);
+        pozycjaMyszyX=Math.round(((ruch.offsetX-400)*Xwartosc+400)/80);
+        pozycjaMyszyY = Math.round(((ruch.offsetY-400)*Ywartosc+400)/80);
       }
 			if(zaznaczono&&poleKlikniecia===0){
-				PunktyTab[aktualnyPunkt].x = ruch.offsetX*Xwartosc/80;
-				PunktyTab[aktualnyPunkt].y = ruch.offsetY*Ywartosc/80;
+				PunktyTab[aktualnyPunkt].x = ((ruch.offsetX-400)*Xwartosc+400)/80;
+				PunktyTab[aktualnyPunkt].y = ((ruch.offsetY-400)*Ywartosc+400)/80;
 			}
 			if(zaznaczono&&szift&&poleKlikniecia===0){
-				PunktyTab[aktualnyPunkt].x = Math.round(ruch.offsetX*Xwartosc/80);
-				PunktyTab[aktualnyPunkt].y = Math.round(ruch.offsetY*Ywartosc/80);
+				PunktyTab[aktualnyPunkt].x = Math.round(((ruch.offsetX-400)*Xwartosc+400)/80);
+				PunktyTab[aktualnyPunkt].y = Math.round(((ruch.offsetY-400)*Ywartosc+400)/80);
 			}
 		}
     var obslugaRuchuMyszyYZ = function(ruch){
       if(srodekTryb){
         poleKlikniecia=1;
       }
-      pozycjaMyszyZ=ruch.offsetX*Zwartosc/80;
-      pozycjaMyszyY = ruch.offsetY*Ywartosc/80;
+      pozycjaMyszyZ=((ruch.offsetX-400)*Zwartosc+400)/80;
+      pozycjaMyszyY = ((ruch.offsetY-400)*Ywartosc+400)/80;
       if(szift){
-        pozycjaMyszyZ=Math.round(ruch.offsetX*Zwartosc/80);
-        pozycjaMyszyY = Math.round(ruch.offsetY*Ywartosc/80);
+        pozycjaMyszyZ=Math.round(((ruch.offsetX-400)*Zwartosc+400)/80);
+        pozycjaMyszyY = Math.round(((ruch.offsetY-400)*Ywartosc+400)/80);
       }
 			if(zaznaczono&&poleKlikniecia===1){
-				PunktyTab[aktualnyPunkt].z = ruch.offsetX*Zwartosc/80;
-				PunktyTab[aktualnyPunkt].y = ruch.offsetY*Ywartosc/80;
+				PunktyTab[aktualnyPunkt].z = ((ruch.offsetX-400)*Zwartosc+400)/80;
+				PunktyTab[aktualnyPunkt].y = ((ruch.offsetY-400)*Ywartosc+400)/80;
 			}
 			if(zaznaczono&&szift&&poleKlikniecia===1){
-				PunktyTab[aktualnyPunkt].z = Math.round(ruch.offsetX*Zwartosc/80);
-				PunktyTab[aktualnyPunkt].y = Math.round(ruch.offsetY*Ywartosc/80);
+				PunktyTab[aktualnyPunkt].z = Math.round(((ruch.offsetX-400)*Zwartosc+400)/80);
+				PunktyTab[aktualnyPunkt].y = Math.round(((ruch.offsetY-400)*Ywartosc+400)/80);
 			}
 		}
 		$("#poleZX").mousemove(obslugaRuchuMyszyZX);
@@ -886,7 +885,6 @@
 		//*******************************************************************
 		//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 		//*******************************************************************
-
 		var render = function(){
       if(wcislo==="lewo"){
         obrotPlaski -= 1;
@@ -901,29 +899,18 @@
         obrotPionowy -=1;
       }
       if(obrotPlaski>360){
-        obrotPlaski -= 360
+        obrotPlaski -= 360;
       }
       if(obrotPlaski<0){
-        obrotPlaski += 360
-      }
-      for(var i = 0; i<PunktyTab.length; i++){
-        if(PunktyTab[i].x*80/Xwartosc>800){
-					$("#ostrzezeniaX").text("Uwaga! Takie rozciągnięcie skali X powoduje, że nie wszystkie punkty znajdują się na ekranie.");
-        }
-        if(PunktyTab[i].y*80/Ywartosc>800){
-					$("#ostrzezeniaY").text("Uwaga! Takie rozciągnięcie skali Y powoduje, że nie wszystkie punkty znajdują się na ekranie.");
-				}
-        if(PunktyTab[i].z*80/Zwartosc>800){
-          $("#ostrzezeniaZ").text("Uwaga! Takie rozciągnięcie skali Z powoduje, że nie wszystkie punkty znajdują się na ekranie.");
-        }
+        obrotPlaski += 360;
       }
       rysowandoXY.beginPath();
       rysowandoZX.beginPath();
       rysowandoYZ.beginPath();
  		  pasekSzerokosc.width = zaznaczonePunkty.length*40;
-			pasek.fillStyle = "White";
+			pasek.fillStyle = "#00ff00";
 			pasek.fillRect(0,0,zaznaczonePunkty.length*40,40);
-			pasek.fillStyle = "Cyan";
+			pasek.fillStyle = "#000000";
 			pasek.font = "20px Calibri";
 			for(var i = 0; i<zaznaczonePunkty.length; i++){
 				pasek.fillRect((i*40)+40,0,2,40);
@@ -934,31 +921,29 @@
 			rysujSkaleXY();
       if(srodekTryb&&poleKlikniecia===0){
         rysowandoXY.fillStyle="Black";
-        rysowandoXY.fillRect((pozycjaMyszyX*80/Xwartosc)-1,0, 2, 800);
-        rysowandoXY.fillRect(0,(pozycjaMyszyY*80/Ywartosc)-1, 800, 2);
+        rysowandoXY.fillRect((pozycjaMyszyX*80-400)/Xwartosc+399,0, 2, 800);
+        rysowandoXY.fillRect(0,(pozycjaMyszyY*80-400)/Ywartosc+399, 800, 2);
       }
-
       if(srodekTryb&&poleKlikniecia===1){
         rysowandoYZ.fillStyle="Black";
-        rysowandoYZ.fillRect((pozycjaMyszyZ*80/Zwartosc)-1,0, 2, 800);
-        rysowandoYZ.fillRect(0,(pozycjaMyszyY*80/Ywartosc)-1, 800, 2);
+        rysowandoYZ.fillRect((pozycjaMyszyZ*80-400)/Zwartosc+399,0, 2, 800);
+        rysowandoYZ.fillRect(0,(pozycjaMyszyY*80-400)/Ywartosc+399, 800, 2);
       }
-
       if(srodekTryb&&poleKlikniecia===2){
         rysowandoZX.fillStyle="Black";
-        rysowandoZX.fillRect((pozycjaMyszyX*80/Xwartosc)-1,0, 2, 800);
-        rysowandoZX.fillRect(0,(pozycjaMyszyZ*80/Zwartosc)-1, 800, 2);
+        rysowandoZX.fillRect((pozycjaMyszyX*80-400)/Xwartosc+399,0, 2, 800);
+        rysowandoZX.fillRect(0,(pozycjaMyszyZ*80-400)/Zwartosc+399, 800, 2);
       }
 			rysowandoXY.fillStyle = "#77ff77";
 			rysowandoXY.fillRect(800, 0, 20, 800);
       for(var i = 0; i<LinieTab.length;i++){
         if(PunktyTab[LinieTab[i].pkt1]!=undefined&&PunktyTab[LinieTab[i].pkt2]!=undefined&&LinieTab[i].pkt1 != undefined&&PunktyTab[LinieTab[i].pkt1].x!=undefined&&PunktyTab[LinieTab[i].pkt2].x!=undefined){
-          rysowandoXY.moveTo(PunktyTab[LinieTab[i].pkt1].x*80/Xwartosc,PunktyTab[LinieTab[i].pkt1].y*80/Ywartosc);
-          rysowandoXY.lineTo(PunktyTab[LinieTab[i].pkt2].x*80/Xwartosc,PunktyTab[LinieTab[i].pkt2].y*80/Ywartosc);
-          rysowandoYZ.moveTo(PunktyTab[LinieTab[i].pkt1].z*80/Zwartosc,PunktyTab[LinieTab[i].pkt1].y*80/Ywartosc);
-          rysowandoYZ.lineTo(PunktyTab[LinieTab[i].pkt2].z*80/Zwartosc,PunktyTab[LinieTab[i].pkt2].y*80/Ywartosc);
-          rysowandoZX.moveTo(PunktyTab[LinieTab[i].pkt1].x*80/Xwartosc,PunktyTab[LinieTab[i].pkt1].z*80/Zwartosc);
-          rysowandoZX.lineTo(PunktyTab[LinieTab[i].pkt2].x*80/Xwartosc,PunktyTab[LinieTab[i].pkt2].z*80/Zwartosc);
+          rysowandoXY.moveTo((PunktyTab[LinieTab[i].pkt1].x*80-400)/Xwartosc+400,(PunktyTab[LinieTab[i].pkt1].y*80-400)/Ywartosc+400);
+          rysowandoXY.lineTo((PunktyTab[LinieTab[i].pkt2].x*80-400)/Xwartosc+400,(PunktyTab[LinieTab[i].pkt2].y*80-400)/Ywartosc+400);
+          rysowandoYZ.moveTo((PunktyTab[LinieTab[i].pkt1].z*80-400)/Zwartosc+400,(PunktyTab[LinieTab[i].pkt1].y*80-400)/Ywartosc+400);
+          rysowandoYZ.lineTo((PunktyTab[LinieTab[i].pkt2].z*80-400)/Zwartosc+400,(PunktyTab[LinieTab[i].pkt2].y*80-400)/Ywartosc+400);
+          rysowandoZX.moveTo((PunktyTab[LinieTab[i].pkt1].x*80-400)/Xwartosc+400,(PunktyTab[LinieTab[i].pkt1].z*80-400)/Zwartosc+400);
+          rysowandoZX.lineTo((PunktyTab[LinieTab[i].pkt2].x*80-400)/Xwartosc+400,(PunktyTab[LinieTab[i].pkt2].z*80-400)/Zwartosc+400);
         }
         if(PunktyTab[LinieTab[i].pkt1]===undefined||PunktyTab[LinieTab[i].pkt2]===undefined){
           LinieTab[i].pkt1=undefined;
@@ -970,57 +955,52 @@
       rysowandoYZ.stroke();
       for(var i = 0; i< zaznaczonePunkty.length; i++){
         if(pasekJest){
-          rysowandoZX.fillStyle = "#008800";
+          rysowandoZX.fillStyle = "#ff00ff";
           rysowandoZX.font = "25px Calibri";
-          rysowandoZX.fillText(zaznaczonePunkty[i],PunktyTab[zaznaczonePunkty[i]].x*80/Xwartosc+5,PunktyTab[zaznaczonePunkty[i]].z*80/Zwartosc+10)
+          rysowandoZX.fillText(zaznaczonePunkty[i],(PunktyTab[zaznaczonePunkty[i]].x*80-400)/Xwartosc+405,(PunktyTab[zaznaczonePunkty[i]].z*80-400)/Zwartosc+410);
         }
         if(pasekJest){
-          rysowandoYZ.fillStyle = "#008800";
+          rysowandoYZ.fillStyle = "#ff00ff";
           rysowandoYZ.font = "25px Calibri";
-          rysowandoYZ.fillText(zaznaczonePunkty[i],PunktyTab[zaznaczonePunkty[i]].z*80/Zwartosc+5,PunktyTab[zaznaczonePunkty[i]].y*80/Ywartosc+10)
+          rysowandoYZ.fillText(zaznaczonePunkty[i],(PunktyTab[zaznaczonePunkty[i]].z*80-400)/Zwartosc+405,(PunktyTab[zaznaczonePunkty[i]].y*80-400)/Ywartosc+410);
         }
         if(pasekJest){
-          rysowandoXY.fillStyle = "#008800";
+          rysowandoXY.fillStyle = "#ff00ff";
           rysowandoXY.font = "25px Calibri";
-          rysowandoXY.fillText(zaznaczonePunkty[i],PunktyTab[zaznaczonePunkty[i]].x*80/Xwartosc+5,PunktyTab[zaznaczonePunkty[i]].y*80/Ywartosc+10)
+          rysowandoXY.fillText(zaznaczonePunkty[i],(PunktyTab[zaznaczonePunkty[i]].x*80-400)/Xwartosc+405,(PunktyTab[zaznaczonePunkty[i]].y*80-400)/Ywartosc+410);
         }
       }
 			for(var i = 0; i<PunktyTab.length; i++){
-		      rysowandoZX.fillStyle = "#000000";
-				  rysowandoZX.fillRect((PunktyTab[i].x*80/Xwartosc)-5,(PunktyTab[i].z*80/Zwartosc)-5,9,9);
+		      rysowandoZX.fillStyle = "#ffffff";
+				  rysowandoZX.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].z*80-400)/Zwartosc)+395,9,9);
           if(i===aktualnyPunkt && zaznaczono){
-				    rysowandoZX.fillStyle = "#aaff00";
-					  rysowandoZX.fillRect((PunktyTab[i].x*80/Xwartosc)-5,(PunktyTab[i].z*80/Zwartosc)-5,9,9);
+				    rysowandoZX.fillStyle = "#ffff00";
+					  rysowandoZX.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].z*80-400)/Zwartosc)+395,9,9);
           }
-
-          rysowandoYZ.fillStyle = "#000000";
-				  rysowandoYZ.fillRect((PunktyTab[i].z*80/Zwartosc)-5,(PunktyTab[i].y*80/Ywartosc)-5,9,9);
+          rysowandoYZ.fillStyle = "#ffffff";
+				  rysowandoYZ.fillRect(((PunktyTab[i].z*80-400)/Zwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           if(i===aktualnyPunkt && zaznaczono){
-				    rysowandoYZ.fillStyle = "#aaff00";
-					  rysowandoYZ.fillRect((PunktyTab[i].z*80/Zwartosc)-5,(PunktyTab[i].y*80/Ywartosc)-5,9,9);
+				    rysowandoYZ.fillStyle = "#ffff00";
+					  rysowandoYZ.fillRect(((PunktyTab[i].z*80-400)/Zwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           }
-
-          rysowandoXY.fillStyle = "#000000";
-				  rysowandoXY.fillRect((PunktyTab[i].x*80/Xwartosc)-5,(PunktyTab[i].y*80/Ywartosc)-5,9,9);
+          rysowandoXY.fillStyle = "#ffffff";
+				  rysowandoXY.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           if(i===aktualnyPunkt && zaznaczono){
-				    rysowandoXY.fillStyle = "#aaff00";
-					  rysowandoXY.fillRect((PunktyTab[i].x*80/Xwartosc)-5,(PunktyTab[i].y*80/Ywartosc)-5,9,9);
+				    rysowandoXY.fillStyle = "#ffff00";
+					  rysowandoXY.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           }
-
         }
         pole3d.beginPath();
-        pole3d.fillStyle="#7777ff";
+        pole3d.fillStyle="#000000";
         pole3d.fillRect(0,0,800,800);
-        pole3d.fillStyle="Black";
-        pole3d.strokeStyle="Brown";
-
+        pole3d.fillStyle="#ff00ff";
+        pole3d.strokeStyle="#00ffff";
         for(var i=0; i<PunktyTab.length;i++){
           if(PunktyTab[i]!=undefined){
             pole3d.fillRect(398+rzutuj(i).X,398+rzutuj(i).Y,4,4);
-
           }
         }
-        pole3d.fillStyle = "#008800";
+        pole3d.fillStyle = "#00ff00";
         pole3d.font = "20px Calibri";
         if(pasekJest){
           for(var i =0; i<zaznaczonePunkty.length; i++){
