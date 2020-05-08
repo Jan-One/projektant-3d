@@ -84,7 +84,7 @@
     </div>
     <div style="width:50%; height:106%; position: absolute; left:20%; top:20%; border-left-color: #00ff00; border-left-width: 2px; border-style:solid; border-right-color: #00ff00; border-right-width: 2px"><div style="width:99%; position:relative; left: 1.6%">
       <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:18pt; position:relative; top:-20px; left:257px">edytowanie</h1>
-      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">praca nad projektem odbywa się głównie w 4 trybach: przesuwania punktów, usuwania punktów, edytowania linii i środkowania. Każda akcja odbywa się poprzez pojedyncze kliknięcie. Jeśli kliknięcie obejmie więcej niż jeden punkt, po lewej u góry pojawi się możliwość wybrania o który punkt chodzi.</p>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">praca nad projektem odbywa się głównie w 4 trybach: przesuwania punktów, usuwania punktów, edytowania linii i środkowania. Każda akcja odbywa się poprzez pojedyncze kliknięcie. Jeśli kliknięcie obejmie więcej niż jeden punkt, po lewej u góry pojawi się możliwość wybrania o który punkt chodzi. Wciskając shift pozycja myszy odczytywana jest tak, jakby znajdowała się na najbliższej kratce.</p>
 
       <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">przesuwanie punktów&nbsp;<img  width="40" height="40" class="p" src="Przesuwanie.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
       <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">klikając na punktu podnosi się go, klikając drugi raz zostawia się go w miejscu gdzie znajduje się mysz.</p>
@@ -190,6 +190,7 @@
       }
     }
     var odczytano = function(tekst){
+      pkt1 = undefined;
       var bufor = "";
       var punkt =-1;
       var linia =-1;
