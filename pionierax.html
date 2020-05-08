@@ -35,7 +35,9 @@
     	<div id="YZ" style="position:absolute; top:20%; left: 50%; width: 50%; height:40%;overflow: scroll;  ">  <canvas id="poleYZ" width="800" height="800"> </canvas></div>
 			<div id="ZX" style="position:absolute; top:60%; left: 0px; width: 50%; height:40%;overflow: scroll; ">  <canvas id="poleZX" width="800" height="800" > </canvas></div>
 		<div id="pole3d" style="position:absolute; top:60%; left: 50%; width: 50%; height:40%;overflow: scroll; "> <canvas id="3d" width="800" height="800" ></canvas></div>
-
+    <h2 id="napisZX" style="color:#00ff00;position:absolute; left: 0%; top: 57%">Widok od góry (ZX)</h2>
+    <h2 id="napisYZ"style="color:#00ff00;position:absolute; left: 51%; top:17%">Widok od lewej (YZ)</h2>
+    <h2 id="napisXY" style="color:#00ff00;position:absolute; left: 0%; top:17% ">Widok od przodu (XY)</h2>
     <div style="position:fixed; left: 0px; top:0px; width:100%; height:124px; background-color: #000000" >
       <img id="11" class="p" src="Przesuwanie.png" width="50" height="50" onclick="tworzPunkt({keyCode: 82})">
       <img id="22" class="p"src="UsuwaniePunktow.png" width="50" height="50"onclick="tworzPunkt({keyCode:85 })">
@@ -49,9 +51,7 @@
     <p class="p"id="suma" style ="background-color: #000000;color:#00ff00; position: fixed; top: 0px; left:1200px" onclick="if(rozwoj){rozwoj=false;}else{rozwoj=true;}"></p>
     <a id="pobierz"class="p" style ="border-bottom-width: 0px;background-color: #000000; color: #00ff00; position: fixed; top: 37px;left:950px">zapisz projekt na dysku</a>
 
-    <h2 id="napisZX" style="color:#00ff00;position:absolute; left: 0%; top: 57%">Widok od góry (ZX)</h2>
-    <h2 id="napisYZ"style="color:#00ff00;position:absolute; left: 51%; top:17%">Widok od lewej (YZ)</h2>
-    <h2 id="napisXY" style="color:#00ff00;position:absolute; left: 0%; top:17% ">Widok od przodu (XY)</h2>
+
     <img  width="50" height="50" id="sprzezenie"class="p" src="sprzezenie.png" style="position:fixed; background-color: White; top:4px; left:262px; filter: brightness(70%)">
     <p  style="color:#00ff00;position: fixed; top: -20px; background-color: Black" >metry w osi X:<input id="X" type="text" value="10"onchange="Xmodyfikacja(this);" style=" border:2px solid #00ff00; background: Black; color:#00ff00 "/> </p>
     <p  style="color:#00ff00;position: fixed; top: 0px; background-color: Black">metry w osi Y:<input id="Y" type="text" value="10"onchange="Ymodyfikacja(this);"style="border:2px solid #00ff00;background: Black; color:#00ff00;position:relative; left:2px"/></p>
@@ -71,9 +71,47 @@
     };
     odczyt.readAsText(event.target.files[0], 'UTF-8');"  >
   </div>
-  <div id="pomoc" style="background-color:Black; position:fixed; left: 0%; top:0%;width:100%;height:100%" >
-    <img width="50" height="50" src="krzyzyk.png" class="p" onclick="document.getElementById('pomoc').style.display = 'none'">
-    <h1 style="color:#00ff00; font-size:40pt"> pomoc</h1>
+  <div id="pomoc" style="background-color:Black; position:absolute; left: 0%; top:0%;width:100%;height:100%" >
+    <img width="50" height="50" src="krzyzyk.png" class="p" onclick="document.getElementById('pomoc').style.display = 'none'" style="position:absolute; top:10px;left:59%; ">
+    <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:55pt; position:absolute; top:-48px; left:40%"> pomoc</h1>
+    <div style="width:19%; height:80%; position: absolute; left:1%; top:20%">
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:18pt; position:relative; top:-20px; left:30px">dostosowywanie</h1>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">plastyczny ekran&nbsp;<img  width="40" height="40" class="p" src="plastic.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając przycisk zmieniasz ułożenie okien edytora. Jak to dokładnie działa zobaczysz sam/a.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">zmiana skali</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wpisując nową wartość w dowolnej skali i wciskając enter skala przyjmuje tą wartość (3 pola na samej górze po lewej). Domyślnie ustawione jest sprzężenie, tzn. zmieniając jedną skalę zmieniają się pozostałe. Można to zmienić klikając na przycisk "Sprzężenie".</p>
+
+    </div>
+    <div style="width:50%; height:106%; position: absolute; left:20%; top:20%; border-left-color: #00ff00; border-left-width: 2px; border-style:solid; border-right-color: #00ff00; border-right-width: 2px"><div style="width:99%; position:relative; left: 1.6%">
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:18pt; position:relative; top:-20px; left:257px">edytowanie</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">praca nad projektem odbywa się głównie w 4 trybach: przesuwania punktów, usuwania punktów, edytowania linii i środkowania. Każda akcja odbywa się poprzez pojedyncze kliknięcie. Jeśli kliknięcie obejmie więcej niż jeden punkt, po lewej u góry pojawi się możliwość wybrania o który punkt chodzi.</p>
+
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">przesuwanie punktów&nbsp;<img  width="40" height="40" class="p" src="Przesuwanie.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">klikając na punktu podnosi się go, klikając drugi raz zostawia się go w miejscu gdzie znajduje się mysz.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">usuwanie punktów&nbsp;<img  width="40" height="40" class="p" src="UsuwaniePunktow.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">klikając usuwa się punkt.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">edycja linii&nbsp;<img  width="40" height="40" class="p" src="EdycjaLinii.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">klikając na pierwszy punkt zakotwiczamy na nim jeden koniec linii (żerdzi), a na drugi - drugi koniec.</p>
+
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">środkowanie&nbsp;<img  width="40" height="40" class="p" src="UstawianieSrodka.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">miejsce w które klikniemy przesunie się na środek. </p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">dodawanie pkt&nbsp;<img  width="40" height="40" class="p" src="TworzeniePunktu.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając przycisk "P" lub wybierając opcję na ekranie dodajemy punkt do projektu.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">cofanie&nbsp;<img  width="40" height="40" class="p" src="Cofanie.png" style="position:relative; left:0px; top:0px; background-color: White;"></h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając przycisk "Z" lub wybierając opcję na ekranie cofamy poprzednią akcję.</p>
+    </div></div>
+    <div style="width:29%; height:80%; position: absolute; left:71%; top:20%">
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:18pt; position:relative; top:-20px; left:150px">projekt</h1>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">zapisywanie projektu</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając "zapisz projekt na dysku" pobierasz projekt i zapisujesz na dysku.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">otwieranie projektu</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając "wczytaj projekt z dysku" otwierasz projekt który możesz wybrać za pomocą okienka otwierania pliku. Uwaga! Tracisz wtedy niezapisaną pracę.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">spis żerdzi</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">wciskając "Żerdzie:" wysuwa się lista żerdzi wraz z ich długościami i liczbą. Drugie kliknięcie zamyka listę.</p>
+      <h1 style="font-family: 'Lucida Console';color:#00ff00; font-size:14pt">widok projektu</h1>
+      <p style="font-family: 'Lucida Console';color:#00ff00; font-size:10pt">w oknie na dole po prawej wyświetla się obraz projektu widziany z dowolnej perspektywy, wybieranej przez przyciski WSAD.</p>
+    </div>
+
   </div>
 
 		<script>
