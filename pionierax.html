@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 
-z<html lang="pl-PL">
+<html lang="pl-PL">
 	<head>
+    <style>
+      .p{
+        position:relative;
+        top:64px;
+        left:450px;
+        border-style: solid;
+        border-color: #00ff00;
+        border-radius: 0px;
+        border-width: 1px;
+      }
+      .p:hover{
+        filter: brightness(80%);
+      }
+      .p:active{
+        filter: brightness(70%);
+      }
+    </style>
     <meta charset="utf-8" >
 		<title>
 			Pionierax
 		</title>
 	</head>
-	<body style="background-color:#77ff77">
+	<body style="background-color:#000000">
 		<script src="https://code.jquery.com/jquery-2.1.0.js">
 
     </script>
@@ -18,24 +35,33 @@ z<html lang="pl-PL">
     	<div id="YZ" style="position:absolute; top:20%; left: 50%; width: 50%; height:40%;overflow: scroll;  ">  <canvas id="poleYZ" width="800" height="800"> </canvas></div>
 			<div id="ZX" style="position:absolute; top:60%; left: 0px; width: 50%; height:40%;overflow: scroll; ">  <canvas id="poleZX" width="800" height="800" > </canvas></div>
 		<div id="pole3d" style="position:absolute; top:60%; left: 50%; width: 50%; height:40%;overflow: scroll; "> <canvas id="3d" width="800" height="800" ></canvas></div>
-    <p id="suma" style ="background-color: White; position: fixed; top: 0px; right:0%" onclick="if(rozwoj){rozwoj=false;}else{rozwoj=true;}"></p>
-    <a id="pobierz" style ="background-color: White; color: Blue; position: fixed; top: 0px;left:1100px">Pobierz</a>
 
-    <p id="tryb" style="font-size: 20px; position: fixed; top: 10px; left: 300px; background-color: White">
-      tryb: przesuwanie punktów
-    </p>
-    <h2 id="napisZX" style="position:absolute; left: 0%; top: 57%">Widok od góry (ZX)</h2>
-    <h2 id="napisYZ"style="position:absolute; left: 51%; top:17%">Widok od lewej (YZ)</h2>
-    <h2 id="napisXY" style="position:absolute; left: 0%; top:17% ">Widok od przodu (XY)</h2>
-    <p id="sprzezenie" style="position:fixed; background-color: White;top:-10px; left:300px">sprzężenie: tak</p>
-    <p  style="position: fixed; top: -20px; background-color: White" >metry w osi X:<input id="X" type="text" value="10"onchange="Xmodyfikacja(this);"/> </p>
-    <p  style="position: fixed; top: 0px; background-color: White">metry w osi Y:<input id="Y" type="text" value="10"onchange="Ymodyfikacja(this);"/></p>
-    <p  style="position: fixed; top: 20px; background-color: White">metry w osi Z:<input id="Z" type="text" value="10"onchange="Zmodyfikacja(this);"/></p>
-    <p id="ulozenie" style="font-size: 20px; position: fixed; top: 40px; left: 200px; background-color: White">
-      ułożenie: plastyczne
-    </p>
-    <canvas id="pasek" width="0" height = "40" style="position: fixed; top: 60px"></canvas>
-    <input type="file" id="plik" style="position:fixed; top:0px; left:500px"
+    <div style="position:fixed; left: 0px; top:0px; width:100%; height:124px; background-color: #000000" >
+      <img id="11" class="p" src="Przesuwanie.png" width="50" height="50" onclick="tworzPunkt({keyCode: 82})">
+      <img id="22" class="p"src="UsuwaniePunktow.png" width="50" height="50"onclick="tworzPunkt({keyCode:85 })">
+      <img id="33" class="p"src="EdycjaLinii.png" width="50" height="50"onclick="tworzPunkt({keyCode:76 })">
+      <img id="44" class="p"src="UstawianieSrodka.png" width="50" height="50"onclick="tworzPunkt({keyCode: 88})">
+
+      <img id="55" class="p"src="Cofanie.png" width="50" height="50"style="position:relative;left:460px" onclick="tworzPunkt({keyCode: 90})">
+      <img id="66" class="p"src="TworzeniePunktu.png" width="50" height="50"style="position:relative;left:460px"onclick="tworzPunkt({keyCode: 80})">
+    </div>
+
+    <p class="p"id="suma" style ="background-color: #000000;color:#00ff00; position: fixed; top: 0px; left:1200px" onclick="if(rozwoj){rozwoj=false;}else{rozwoj=true;}"></p>
+    <a id="pobierz"class="p" style ="border-bottom-width: 0px;background-color: #000000; color: #00ff00; position: fixed; top: 37px;left:950px">zapisz projekt na dysku</a>
+
+    <h2 id="napisZX" style="color:#00ff00;position:absolute; left: 0%; top: 57%">Widok od góry (ZX)</h2>
+    <h2 id="napisYZ"style="color:#00ff00;position:absolute; left: 51%; top:17%">Widok od lewej (YZ)</h2>
+    <h2 id="napisXY" style="color:#00ff00;position:absolute; left: 0%; top:17% ">Widok od przodu (XY)</h2>
+    <img  width="50" height="50" id="sprzezenie"class="p" src="sprzezenie.png" style="position:fixed; background-color: White; top:4px; left:262px; filter: brightness(70%)">
+    <p  style="color:#00ff00;position: fixed; top: -20px; background-color: Black" >metry w osi X:<input id="X" type="text" value="10"onchange="Xmodyfikacja(this);" style=" border:2px solid #00ff00; background: Black; color:#00ff00 "/> </p>
+    <p  style="color:#00ff00;position: fixed; top: 0px; background-color: Black">metry w osi Y:<input id="Y" type="text" value="10"onchange="Ymodyfikacja(this);"style="border:2px solid #00ff00;background: Black; color:#00ff00;position:relative; left:2px"/></p>
+    <p  style="color:#00ff00;position: fixed; top: 20px; background-color: Black">metry w osi Z:<input id="Z" type="text" value="10"onchange="Zmodyfikacja(this);"style="border:2px solid #00ff00;background: Black; color:#00ff00;  position:relative; left:2px"/></p>
+    <img id="ulozenie" width="50" height="50" class="p" src="plastic.png" style=" position: fixed; top: 64px; left: 380px">
+    <img class="p" src="pomoc.png" width="50" height = "50" style="position:fixed; top:3px"onclick="document.getElementById('pomoc').style.display = 'initial'">
+    <canvas id="pasek" width="0" height = "40" style="position: fixed; top: 80px"></canvas>
+    <div style="position:fixed; top:0px; left:500px;">
+      <label class="p"for="plik" style="background-color: #000000; color:#00ff00">wczytaj projekt z dysku</label>
+    <input type="file" id="plik" style=" visibility:hidden"
     onchange="
     var odczyt = new FileReader();
     var lipon;
@@ -44,9 +70,12 @@ z<html lang="pl-PL">
       window.zlitujcieSieZTymiNazwami = true;
     };
     odczyt.readAsText(event.target.files[0], 'UTF-8');"  >
-    <input style="position:fixed;top:0px;left:420px" value="pomoc" type="submit" onclick="
-    alert('Witaj w programie pionierax. Oto jego instrukcja obsługi: Cała edycja polega na pracy w trzech trybach: przesuwania punktów, usuwania punktów i edycji linii(naraz usuwania i dodawania). Ustawia się je kolejno klawiszami R U L. W pierwszym trybie kliknięcie na punkt powoduje jego podniesienie, kolejne upuszczenie. W drugim kliknięcie na punkt powoduje usunięcie. W trzecim kliknięcie na punkt powoduje zaczepienie na nim nowej linii, a kliknięcie na inny zakotwiczenie także w nim. Jeśli tą operacje wykona się na punktach pomędzy którymi jest już żerdź, nie zostanie stworzona nowa, lecz stara zostanie usunięta. Jeśli jakiekolwiek kliknięcie mające na celu wybrać punkt (każde za wyjątkiem upuszczającego) natrafi na dwa nachodzące na siebie punkty, u góry po lewej pojawia się pasek, na którym można wybrać o który punkt chodzi (każdy punkt ma swój numer, który w takiej sytuacji zostanie wyświetlony na wszystkich płaszczyznach i dzięki temu możemy wybrać).  Punkty 3d dodać możesz wciskając P. Na czwartym polu znajduje się widok w 3d (nieperspektywiczny bo równoległy, to znaczy każdy obiekt widać pod tym samym kątem). Sterować kątem rzutowania można za pomocą kalwiszy WSAD. W prawym górnym rogu znajdują się 3 pola, w których możemy ustawić skalę przestrzeni 3d (X-skala lewo prawo, Y-skala góra dół, Z-skala tył przód) w jakiej chcemy pracować. Domyślnie są one spzężone, to znaczy zmiana wartości jednej z nich powoduje zmianę na taką samą wartość reszty. Jeśli nie chcemy sprzężenia, klikamy na pole tekstowe położone na prawo od wyżej wymienionych trzech z napisem SPRZĘŻENIE. Każdy projekt możemy zapisać w postaci pliku PIONEER. Aby to zrobić klkamy na przycisk POBIERZ na górze ekranu, nieco po lewej. Możemy także wczytać plik już zapisany, klikając na szare pole z napisem PRZEGLĄDAJ. Wybierzemy wtedy projekt z pamięci komputera. Po lewej na górze znajduje się spis utworzonych żerdzi wraz z ich długościami i ilością (żeby otworzyć trzeba kliknąć, żeby zamknąć - znowu kliknąć). Jak widzisz, główne pole składa się z czterech kwadratów. Mogą one być ułożone na dwa sposoby: plastyczny i pełnowymiarowy. W tym pierwszym masz do dyspozycji 4 okienka równej wielkości, znajdujące się cały czas na ekranie. Możesz przez nie oglądać dowolne miejsce każdego z pól, ustawiając to za pomocą skroli. W drugim trybie z kolei wszystkie okna zajmują dokładnie tyle miejsca ile potrzebują, i możesz widzieć je całe (naturalnie nie naraz). Jeśli chcesz przybliżyc lub oddalić obraz, użyj przeglądarkowego przybliżenia.');
-    "/>
+  </div>
+  <div id="pomoc" style="background-color:Black; position:fixed; left: 0%; top:0%;width:100%;height:100%" >
+    <img width="50" height="50" src="krzyzyk.png" class="p" onclick="document.getElementById('pomoc').style.display = 'none'">
+    <h1 style="color:#00ff00; font-size:40pt"> pomoc</h1>
+  </div>
+
 		<script>
     var srodekTryb = false;
     var zapis = [];
@@ -190,14 +219,14 @@ z<html lang="pl-PL">
 		rysowandoZX.fillRect(0, 0, 800, 800);
 		var pasek = document.getElementById("pasek").getContext("2d");
 	//////////////////////////////////////
-    rysowandoXY.strokeStyle="Brown";
-    rysowandoXY.lineWidth = 6;
+    rysowandoXY.strokeStyle="#00ffff";
+    rysowandoXY.lineWidth = 4;
     rysowandoXY.beginPath();
-    rysowandoYZ.strokeStyle="Brown";
-    rysowandoYZ.lineWidth = 6;
+    rysowandoYZ.strokeStyle="#00ffff";
+    rysowandoYZ.lineWidth = 4;
     rysowandoYZ.beginPath();
-    rysowandoZX.strokeStyle="Brown";
-    rysowandoZX.lineWidth = 6;
+    rysowandoZX.strokeStyle="#00ffff";
+    rysowandoZX.lineWidth = 4;
     rysowandoZX.beginPath();
 	//////////////////////////////////////
 	 var Xwartosc = 10;
@@ -252,7 +281,7 @@ z<html lang="pl-PL">
        odczytano(wartoscOdczytana);
      }
    }
-   setInterval(aktualizujDlugosci, 500);
+   setInterval(aktualizujDlugosci, 50);
    var rzutuj= function(numer){
      return {X: Math.sin(Math.radians(obrotPlaski+90))*(PunktyTab[numer].x*56.5685-400)/Xwartosc+Math.sin(Math.radians(obrotPlaski))*(PunktyTab[numer].z*56.5685-400)/Zwartosc,
      Y:         (Math.sin(Math.radians(obrotPionowy))*(PunktyTab[numer].y*56.5685-400)/Ywartosc)+ (Math.sin(Math.radians(obrotPionowy+90))*(Math.sin(Math.radians(obrotPlaski))*(PunktyTab[numer].x*56.5685-400)/Xwartosc-Math.sin(Math.radians(obrotPlaski+90))*(PunktyTab[numer].z*56.5685-400)/Zwartosc))};
@@ -260,29 +289,30 @@ z<html lang="pl-PL">
    var ulozenie = true;
    $("#ulozenie").click(function(klik){
      if(ulozenie){
-       $("#ulozenie").text("ułożenie: pełnowymiarowe");
+       document.getElementById("ulozenie").style.filter= "brightness(70%)";
        document.getElementById("XY").style="position: absolute;overflow: visible; top: 200px; left: 0px";
        document.getElementById("ZX").style="position: absolute;overflow: visible; top: 1020px; left: 0px";
        document.getElementById("YZ").style="position: absolute;overflow: visible; top: 200px; left: 820px";
-       document.getElementById("pole3d").style="position: absolute;overflow: visible; top: 1020px; left: 820px";
-       document.getElementById("napisZX").style="position:absolute; left:3px ; top: 1023px";
-       document.getElementById("napisYZ").style="position:absolute; left: 823px; top:203px";
-       document.getElementById("napisXY").style="position:absolute; left: 3px; top:203px ";
+       document.getElementById("pole3d").style="color:#00ff00;position: absolute;overflow: visible; top: 1020px; left: 820px";
+       document.getElementById("napisZX").style="color:#00ff00;position:absolute; left:3px ; top: 1023px";
+       document.getElementById("napisYZ").style="color:#00ff00;position:absolute; left: 823px; top:203px";
+       document.getElementById("napisXY").style="color:#00ff00;position:absolute; left: 3px; top:203px ";
        ulozenie = false;
      }else{
-       $("#ulozenie").text("ułożenie: plastyczne");
+       document.getElementById("ulozenie").style.filter= "brightness(100%)";
+
        document.getElementById("XY").style="position:absolute; top:20%; left: 0%; width: 50%; height:40%;overflow: scroll; ";
        document.getElementById("ZX").style="position:absolute; top:20%; left: 50%; width: 50%; height:40%;overflow: scroll";
        document.getElementById("YZ").style="position:absolute; top:60%; left: 0px; width: 50%; height:40%;overflow: scroll;";
        document.getElementById("pole3d").style="position:absolute; top:60%; left: 50%; width: 50%; height:40%;overflow: scroll;";
-       document.getElementById("napisZX").style="position:absolute; left: 0%; top: 57%";
-       document.getElementById("napisYZ").style="position:absolute; left: 51%; top:17%";
-       document.getElementById("napisXY").style="position:absolute; left: 0%; top:17% ";
+       document.getElementById("napisZX").style="color:#00ff00;position:absolute; left: 0%; top: 57%";
+       document.getElementById("napisYZ").style="color:#00ff00;position:absolute; left: 51%; top:17%";
+       document.getElementById("napisXY").style="color:#00ff00;position:absolute; left: 0%; top:17% ";
        ulozenie = true;
      }
    });
 	 var rysujSkaleXY = function(){
-		rysowandoXY.fillStyle = "White";
+		rysowandoXY.fillStyle = "Black";
 		rysowandoXY.fillRect(0,0,800,800);
 		for (var i = 0; i<=Xwartosc*100; i++){
       if(Xwartosc <= 2){
@@ -290,11 +320,11 @@ z<html lang="pl-PL">
         rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
       if(i%10===0){
-        rysowandoXY.fillStyle = "#ff3333";
+        rysowandoXY.fillStyle = "#ff0000";
         	rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
 			if(i%100===0){
-				rysowandoXY.fillStyle = "#3333ff";
+				rysowandoXY.fillStyle = "#0000ff";
 				rysowandoXY.fillRect(((i*8/Xwartosc)-1),0,2,800);
 			}
 		}
@@ -304,18 +334,18 @@ z<html lang="pl-PL">
         rysowandoXY.fillRect(0, ((i*8/Ywartosc)-1),800,1);
       }
       if(i%10===0){
-        rysowandoXY.fillStyle = "#ff3333";
+        rysowandoXY.fillStyle = "#ff0000";
         	rysowandoXY.fillRect(0, ((i*8/Ywartosc)-1),800,1);
       }
 			if(i%100===0){
-				rysowandoXY.fillStyle = "#3333ff";
+				rysowandoXY.fillStyle = "#0000ff";
 				rysowandoXY.fillRect(0,((i*8/Ywartosc)-1),800,2);
 			}
 		}
 	}
 	//////////////////////////////////////////////////////
   var rysujSkaleYZ = function(){
-   rysowandoYZ.fillStyle = "White";
+   rysowandoYZ.fillStyle = "Black";
    rysowandoYZ.fillRect(0,0,800,800);
    for (var i = 0; i<=Zwartosc*100; i++){
      if(Zwartosc <= 2){
@@ -323,11 +353,11 @@ z<html lang="pl-PL">
        rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,1,800);
      }
      if(i%10===0){
-       rysowandoYZ.fillStyle = "#ff3333";
+       rysowandoYZ.fillStyle = "#ff0000";
          rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,1,800);
      }
      if(i%100===0){
-       rysowandoYZ.fillStyle = "#3333ff";
+       rysowandoYZ.fillStyle = "#0000ff";
        rysowandoYZ.fillRect(((i*8/Zwartosc)-1),0,2,800);
      }
    }
@@ -337,18 +367,18 @@ z<html lang="pl-PL">
        rysowandoYZ.fillRect(0,((i*8/Ywartosc)-1),800,1);
      }
      if(i%10===0){
-       rysowandoYZ.fillStyle = "#ff3333";
+       rysowandoYZ.fillStyle = "#ff0000";
          rysowandoYZ.fillRect(0,((i*8/Ywartosc)-1),800,1);
      }
      if(i%100===0){
-       rysowandoYZ.fillStyle = "#3333ff";
+       rysowandoYZ.fillStyle = "#0000ff";
        rysowandoYZ.fillRect(0, ((i*8/Ywartosc)-1),800,2);
      }
    }
  }
 	//////////////////////////////////////////////////////
 	 var rysujSkaleZX = function(){
-		rysowandoZX.fillStyle = "White";
+		rysowandoZX.fillStyle = "Black";
 		rysowandoZX.fillRect(0,0,800,800);
     for (var i = 0; i<=Xwartosc*100; i++){
       if(Xwartosc <= 2){
@@ -356,11 +386,11 @@ z<html lang="pl-PL">
         rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
       if(i%10===0){
-        rysowandoZX.fillStyle = "#ff3333";
+        rysowandoZX.fillStyle = "#ff0000";
           rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,1,800);
       }
       if(i%100===0){
-        rysowandoZX.fillStyle = "#3333ff";
+        rysowandoZX.fillStyle = "#0000ff";
         rysowandoZX.fillRect(((i*8/Xwartosc)-1),0,2,800);
       }
     }
@@ -370,22 +400,25 @@ z<html lang="pl-PL">
         rysowandoZX.fillRect(0,((i*8/Zwartosc)-1),800,1);
       }
       if(i%10===0){
-        rysowandoZX.fillStyle = "#ff3333";
+        rysowandoZX.fillStyle = "#ff0000";
           rysowandoZX.fillRect(0,((i*8/Zwartosc)-1),800,1);
       }
       if(i%100===0){
-        rysowandoZX.fillStyle = "#3333ff";
+        rysowandoZX.fillStyle = "#0000ff";
         rysowandoZX.fillRect(0, ((i*8/Zwartosc)-1),800,2);
       }
     }
 	}
 	//////////////////////////////////////////////////////
    var sprzezenieObsluga = function(){
-     $("#sprzezenie").text("sprzężenie: nie");
      sprzezenie = !sprzezenie;
+
      if(sprzezenie){
-       $("#sprzezenie").text("sprzężenie: tak");
+       document.getElementById("sprzezenie").style.filter="brightness(70%)";
+     }else{
+       document.getElementById("sprzezenie").style.filter="brightness(100%)";
      }
+
    }
    $("#sprzezenie").click(sprzezenieObsluga);
 	 var Xmodyfikacja = function (zdarzenie){
@@ -434,6 +467,10 @@ z<html lang="pl-PL">
 	//////////////////////////////////////
 		var tworzPunkt = function (klik){
       if(klik.keyCode === 76||klik.keyCode === 85||klik.keyCode===82||klik.keyCode===88){
+        document.getElementById("11").style.filter = "brightness(100%)";
+        document.getElementById("22").style.filter = "brightness(100%)";
+        document.getElementById("33").style.filter = "brightness(100%)";
+        document.getElementById("44").style.filter = "brightness(100%)";
         pkt1 = undefined;
         srodekTryb=false;
         trybLinie = false;
@@ -449,19 +486,19 @@ z<html lang="pl-PL">
 		  }
       if(klik.keyCode === 76){
         trybLinie=true;
-        $("#tryb").text("tryb: edycja lini");
+        document.getElementById("33").style.filter = "brightness(70%)";
       }
       if(klik.keyCode === 85){
         trybUsuwanie=true;
-        $("#tryb").text("tryb: usuwanie punktów");
+        document.getElementById("22").style.filter = "brightness(70%)";
       }
       if(klik.keyCode === 88){
         srodekTryb=true;
-        $("#tryb").text("tryb: przesuwanie obrazu");
+        document.getElementById("44").style.filter = "brightness(70%)";
       }
       if(klik.keyCode===82){
         trybPrzesuwanie = true;
-        $("#tryb").text("tryb: przesuwanie punktów");
+        document.getElementById("11").style.filter = "brightness(70%)";
       }
       if(klik.keyCode===65){
         wcislo="lewo";
@@ -832,9 +869,9 @@ z<html lang="pl-PL">
       rysowandoZX.beginPath();
       rysowandoYZ.beginPath();
  		  pasekSzerokosc.width = zaznaczonePunkty.length*40;
-			pasek.fillStyle = "White";
+			pasek.fillStyle = "#00ff00";
 			pasek.fillRect(0,0,zaznaczonePunkty.length*40,40);
-			pasek.fillStyle = "Cyan";
+			pasek.fillStyle = "#000000";
 			pasek.font = "20px Calibri";
 			for(var i = 0; i<zaznaczonePunkty.length; i++){
 				pasek.fillRect((i*40)+40,0,2,40);
@@ -879,52 +916,52 @@ z<html lang="pl-PL">
       rysowandoYZ.stroke();
       for(var i = 0; i< zaznaczonePunkty.length; i++){
         if(pasekJest){
-          rysowandoZX.fillStyle = "#008800";
+          rysowandoZX.fillStyle = "#ff00ff";
           rysowandoZX.font = "25px Calibri";
           rysowandoZX.fillText(zaznaczonePunkty[i],(PunktyTab[zaznaczonePunkty[i]].x*80-400)/Xwartosc+405,(PunktyTab[zaznaczonePunkty[i]].z*80-400)/Zwartosc+410);
         }
         if(pasekJest){
-          rysowandoYZ.fillStyle = "#008800";
+          rysowandoYZ.fillStyle = "#ff00ff";
           rysowandoYZ.font = "25px Calibri";
           rysowandoYZ.fillText(zaznaczonePunkty[i],(PunktyTab[zaznaczonePunkty[i]].z*80-400)/Zwartosc+405,(PunktyTab[zaznaczonePunkty[i]].y*80-400)/Ywartosc+410);
         }
         if(pasekJest){
-          rysowandoXY.fillStyle = "#008800";
+          rysowandoXY.fillStyle = "#ff00ff";
           rysowandoXY.font = "25px Calibri";
           rysowandoXY.fillText(zaznaczonePunkty[i],(PunktyTab[zaznaczonePunkty[i]].x*80-400)/Xwartosc+405,(PunktyTab[zaznaczonePunkty[i]].y*80-400)/Ywartosc+410);
         }
       }
 			for(var i = 0; i<PunktyTab.length; i++){
-		      rysowandoZX.fillStyle = "#000000";
+		      rysowandoZX.fillStyle = "#ffffff";
 				  rysowandoZX.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].z*80-400)/Zwartosc)+395,9,9);
           if(i===aktualnyPunkt && zaznaczono){
-				    rysowandoZX.fillStyle = "#aaff00";
+				    rysowandoZX.fillStyle = "#ffff00";
 					  rysowandoZX.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].z*80-400)/Zwartosc)+395,9,9);
           }
-          rysowandoYZ.fillStyle = "#000000";
+          rysowandoYZ.fillStyle = "#ffffff";
 				  rysowandoYZ.fillRect(((PunktyTab[i].z*80-400)/Zwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           if(i===aktualnyPunkt && zaznaczono){
-				    rysowandoYZ.fillStyle = "#aaff00";
+				    rysowandoYZ.fillStyle = "#ffff00";
 					  rysowandoYZ.fillRect(((PunktyTab[i].z*80-400)/Zwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           }
-          rysowandoXY.fillStyle = "#000000";
+          rysowandoXY.fillStyle = "#ffffff";
 				  rysowandoXY.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           if(i===aktualnyPunkt && zaznaczono){
-				    rysowandoXY.fillStyle = "#aaff00";
+				    rysowandoXY.fillStyle = "#ffff00";
 					  rysowandoXY.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           }
         }
         pole3d.beginPath();
-        pole3d.fillStyle="#7777ff";
+        pole3d.fillStyle="#000000";
         pole3d.fillRect(0,0,800,800);
-        pole3d.fillStyle="Black";
-        pole3d.strokeStyle="Brown";
+        pole3d.fillStyle="#ff00ff";
+        pole3d.strokeStyle="#00ffff";
         for(var i=0; i<PunktyTab.length;i++){
           if(PunktyTab[i]!=undefined){
             pole3d.fillRect(398+rzutuj(i).X,398+rzutuj(i).Y,4,4);
           }
         }
-        pole3d.fillStyle = "#008800";
+        pole3d.fillStyle = "#00ff00";
         pole3d.font = "20px Calibri";
         if(pasekJest){
           for(var i =0; i<zaznaczonePunkty.length; i++){
