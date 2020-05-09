@@ -333,9 +333,9 @@
        document.getElementById("ZX").style="position: absolute;overflow: visible; top: 1020px; left: 0px";
        document.getElementById("YZ").style="position: absolute;overflow: visible; top: 200px; left: 820px";
        document.getElementById("pole3d").style="color:#00ff00;position: absolute;overflow: visible; top: 1020px; left: 820px";
-       document.getElementById("napisZX").style="color:#00ff00;position:absolute; left:3px ; top: 1023px";
-       document.getElementById("napisYZ").style="color:#00ff00;position:absolute; left: 823px; top:203px";
-       document.getElementById("napisXY").style="color:#00ff00;position:absolute; left: 3px; top:203px ";
+       document.getElementById("napisZX").style="font-family: 'Lucida Console';color:#00ff00;position:absolute; left:3px ; top: 1023px";
+       document.getElementById("napisYZ").style="font-family: 'Lucida Console';color:#00ff00;position:absolute; left: 823px; top:203px";
+       document.getElementById("napisXY").style="font-family: 'Lucida Console';color:#00ff00;position:absolute; left: 3px; top:203px ";
        ulozenie = false;
      }else{
        document.getElementById("ulozenie").style.opacity= "0.7";
@@ -344,14 +344,14 @@
        document.getElementById("ZX").style="position:absolute; top:20%; left: 50%; width: 50%; height:40%;overflow: scroll";
        document.getElementById("YZ").style="position:absolute; top:60%; left: 0px; width: 50%; height:40%;overflow: scroll;";
        document.getElementById("pole3d").style="position:absolute; top:60%; left: 50%; width: 50%; height:40%;overflow: scroll;";
-       document.getElementById("napisZX").style="color:#00ff00;position:absolute; left: 0%; top: 57%";
-       document.getElementById("napisYZ").style="color:#00ff00;position:absolute; left: 51%; top:17%";
-       document.getElementById("napisXY").style="color:#00ff00;position:absolute; left: 0%; top:17% ";
+       document.getElementById("napisZX").style="font-family: 'Lucida Console';color:#00ff00;position:absolute; left: 0%; top: 57%";
+       document.getElementById("napisYZ").style="font-family: 'Lucida Console';color:#00ff00;position:absolute; left: 51%; top:17%";
+       document.getElementById("napisXY").style="font-family: 'Lucida Console';color:#00ff00;position:absolute; left: 0%; top:17% ";
        ulozenie = true;
      }
    });
 	 var rysujSkaleXY = function(){
-		rysowandoXY.fillStyle = "Black";
+		rysowandoXY.fillStyle = "#000000";
 		rysowandoXY.fillRect(0,0,800,800);
 		for (var i = 0; i<=Xwartosc*100; i++){
       if(Xwartosc <= 2){
@@ -1009,8 +1009,10 @@
         }
         for(var i=0; i<LinieTab.length;i++){
           if(LinieTab[i].pkt1!=undefined&&PunktyTab[LinieTab[i].pkt1]!=undefined&&PunktyTab[LinieTab[i].pkt2]!=undefined){
-            pole3d.moveTo(400+rzutuj(LinieTab[i].pkt1).X,400+rzutuj(LinieTab[i].pkt1).Y);
-            pole3d.lineTo(400+rzutuj(LinieTab[i].pkt2).X,400+rzutuj(LinieTab[i].pkt2).Y);
+            if(PunktyTab[LinieTab[i].pkt1].x!=undefined&&PunktyTab[LinieTab[i].pkt2].x!=undefined){
+              pole3d.moveTo(400+rzutuj(LinieTab[i].pkt1).X,400+rzutuj(LinieTab[i].pkt1).Y);
+              pole3d.lineTo(400+rzutuj(LinieTab[i].pkt2).X,400+rzutuj(LinieTab[i].pkt2).Y);
+            }
           }
         }
         pole3d.stroke();
