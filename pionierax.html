@@ -185,7 +185,7 @@
     mierz = function(numer){
       if(PunktyTab[LinieTab[numer].pkt1] != undefined&&PunktyTab[LinieTab[numer].pkt2] != undefined){
         if(PunktyTab[LinieTab[numer].pkt1].x!=undefined&&PunktyTab[LinieTab[numer].pkt2].x!=undefined){
-          return Math.round(100*Math.sqrt(Math.pow(PunktyTab[LinieTab[numer].pkt1].x - PunktyTab[LinieTab[numer].pkt2].x, 2)+Math.pow(PunktyTab[LinieTab[numer].pkt1].y - PunktyTab[LinieTab[numer].pkt2].y, 2)+Math.pow(PunktyTab[LinieTab[numer].pkt1].z - PunktyTab[LinieTab[numer].pkt2].z, 2)))/100;
+          return (Math.sqrt(Math.pow(PunktyTab[LinieTab[numer].pkt1].x - PunktyTab[LinieTab[numer].pkt2].x, 2)+Math.pow(PunktyTab[LinieTab[numer].pkt1].y - PunktyTab[LinieTab[numer].pkt2].y, 2)+Math.pow(PunktyTab[LinieTab[numer].pkt1].z - PunktyTab[LinieTab[numer].pkt2].z, 2)));
 
         }
       }
@@ -273,24 +273,27 @@
 	 var Zwartosc = 10;
 	 var Ywartosc = 10;
 	 var projekt = "";
+
    var aktualizujDlugosci = function(grfrfsr){
      $("#suma").text("Żerdzie:");
      for(var i = 0; i<LinieTab.length; i++){
        zaliczono = false;
        for(var ii = 0; ii<dlugosciTab.length; ii++){
 
-         if(mierz(i)===dlugosciTab[ii].dlug && !zaliczono){
+         if(Math.round(100*mierz(i))/1000===dlugosciTab[ii].dlug && !zaliczono){
 
            dlugosciTab[ii].liczba++;
            zaliczono = true;
          }
        }
        if(!zaliczono){
-         dlugosciTab.push(new dlugosc(mierz(i)/10, 1));
+         dlugosciTab.push(new dlugosc(Math.round(100*mierz(i))/1000, 1));
        }
      }
      for(var i = 0; i<dlugosciTab.length; i++){
-       if(rozwoj){
+
+
+       if(rozwoj && !isNaN(dlugosciTab[i].dlug) && dlugosciTab[i].dlug!=0){
          $("#suma").append("<br/>"+dlugosciTab[i].liczba + "x "+dlugosciTab[i].dlug+"m");
        }
      }
@@ -971,19 +974,19 @@
 			for(var i = 0; i<PunktyTab.length; i++){
 		      rysowandoZX.fillStyle = "#ffffff";
 				  rysowandoZX.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].z*80-400)/Zwartosc)+395,9,9);
-          if(i===aktualnyPunkt && zaznaczono){
+          if((i===aktualnyPunkt && zaznaczono)||i===pkt1){
 				    rysowandoZX.fillStyle = "#ffff00";
 					  rysowandoZX.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].z*80-400)/Zwartosc)+395,9,9);
           }
           rysowandoYZ.fillStyle = "#ffffff";
 				  rysowandoYZ.fillRect(((PunktyTab[i].z*80-400)/Zwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
-          if(i===aktualnyPunkt && zaznaczono){
+          if((i===aktualnyPunkt && zaznaczono)||i===pkt1){
 				    rysowandoYZ.fillStyle = "#ffff00";
 					  rysowandoYZ.fillRect(((PunktyTab[i].z*80-400)/Zwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           }
           rysowandoXY.fillStyle = "#ffffff";
 				  rysowandoXY.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
-          if(i===aktualnyPunkt && zaznaczono){
+          if((i===aktualnyPunkt && zaznaczono)||i===pkt1){
 				    rysowandoXY.fillStyle = "#ffff00";
 					  rysowandoXY.fillRect(((PunktyTab[i].x*80-400)/Xwartosc)+395,((PunktyTab[i].y*80-400)/Ywartosc)+395,9,9);
           }
